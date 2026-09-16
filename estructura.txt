@@ -1,0 +1,13 @@
+/flowforce/
+├── index.html
+├── manifest.json
+├── sw.js
+├── icon.svg                    ← generar con iconos.html
+├── icon-maskable.svg           ← generar con iconos.html
+├── icon-192.png                ← descarga del generador
+├── icon-512.png                ← descarga del generador
+├── icon-maskable-192.png       ← descarga del generador
+├── icon-maskable-512.png       ← descarga del generador
+├── screenshot-wide.png         ← descarga de assets.html
+├── screenshot-narrow.png       ← descarga de assets.html
+└── (9 splash screens)          ← descargas de assets.html

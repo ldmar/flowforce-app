@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FlowForce · by Ohmygoch</title>
+
+<meta name="description" content="Calistenia + Tai Chi. Rutinas dinámicas, fuerza flexible y calma profunda." />
+<meta name="theme-color" content="#0e1210" />
+<meta name="color-scheme" content="dark" />
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<link rel="icon" type="image/svg+xml" href="icon.svg" />
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="FlowForce" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<!-- iOS Splash screens -->
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)" href="splash-iphone-15-pro-max-1290x2796.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)" href="splash-iphone-15-pro-1179x2556.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)" href="splash-iphone-14-1170x2532.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="splash-iphone-x-1125x2436.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" href="splash-iphone-xr-828x1792.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="splash-iphone-8-750x1334.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="splash-ipad-pro-12-2048x2732.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" href="splash-ipad-pro-11-1668x2388.png" />
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" href="splash-ipad-mini-1536x2048.png" />
+
+<style>
+  :root {
+    --bg: #0e1210;
+    --card: #182019;
+    --card-2: #1e2820;
+    --line: #2a362c;
+    --text: #eaf0ea;
+    --muted: #8fa091;
+    --bamboo: #7fb069;
+    --bamboo-dim: #4d7a3c;
+    --gold: #d4a24c;
+    --sun: #f2a57c;
+    --sun-deep: #c96f4a;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    background:
+      radial-gradient(1000px 400px at 50% -10%, rgba(242,165,124,.07) 0%, transparent 60%),
+      radial-gradient(1200px 600px at 15% -10%, #1a241c 0%, var(--bg) 55%) fixed;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 18px 80px; }
+
+  /* HEADER */
+  header.top {
+    display: flex; align-items: center; gap: 12px; padding: 4px 0 20px;
+  }
+  .logo {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: #0a1410;
+    display: grid; place-items: center;
+    box-shadow:
+      0 0 28px rgba(242,165,124,.35),
+      0 0 0 1px rgba(242,165,124,.15);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .logo svg { width: 100%; height: 100%; display: block; }
+  .brand { flex: 1; min-width: 0; }
+  .brand h1 {
+    margin: 0; font-size: 19px; font-weight: 800; letter-spacing: .4px;
+    background: linear-gradient(90deg, #fff 30%, var(--sun));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .brand p { margin: 0; font-size: 12px; color: var(--muted); }
+  .brand p .credit { color: var(--sun); font-weight: 600; }
+  .brand .tagline {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--bamboo);
+    margin-top: 2px;
+    letter-spacing: .3px;
+    opacity: .9;
+  }
+
+  .settings-btn {
+    background: var(--card);
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 9px 12px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .15s ease;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+  .settings-btn:hover { border-color: var(--sun); color: var(--sun); }
+
+  .install-btn {
+    background: linear-gradient(135deg, var(--sun), var(--sun-deep));
+    color: #1a0a04;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 12.5px;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform .15s ease, box-shadow .15s ease;
+    box-shadow: 0 6px 18px rgba(242,165,124,.3);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .install-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(242,165,124,.45); }
+  .install-btn.hidden { display: none; }
+
+  /* SELECT SCREEN */
+  h2.step {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--muted); margin: 22px 0 10px; font-weight: 600;
+  }
+  .group { display: grid; gap: 10px; }
+  .group.cols-2 { grid-template-columns: 1fr 1fr; }
+  .group.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+  .pill {
+    -webkit-appearance: none; appearance: none;
+    background: var(--card); border: 1px solid var(--line); color: var(--text);
+    padding: 14px 12px; border-radius: 14px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    text-align: center; transition: all .18s ease;
+    font-family: inherit; line-height: 1.3;
+  }
+  .pill .sub { display: block; font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  .pill:hover { border-color: var(--bamboo-dim); transform: translateY(-1px); }
+  .pill.active {
+    background: linear-gradient(135deg, rgba(242,165,124,.18), rgba(242,165,124,.05));
+    border-color: var(--sun);
+    box-shadow: 0 0 0 1px var(--sun), 0 0 20px rgba(242,165,124,.25);
+    color: #ffe8dd;
+  }
+  .pill.active .sub { color: #ffcfb8; }
+
+  /* LEVEL UP */
+  .levelup {
+    background: linear-gradient(135deg, rgba(242,165,124,.14), rgba(242,165,124,.04));
+    border: 1px solid rgba(242,165,124,.4);
+    border-radius: 14px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    animation: slideDown .4s ease;
+  }
+  .levelup-body { flex: 1; font-size: 13.5px; }
+  .levelup-body strong { color: var(--sun); }
+  .levelup-body span { color: var(--muted); font-size: 12px; }
+  .levelup-btn {
+    background: linear-gradient(135deg, var(--sun), var(--sun-deep));
+    color: #1a0a04; border: none; padding: 10px 16px;
+    border-radius: 10px; font-weight: 700; font-size: 13px;
+    cursor: pointer; font-family: inherit;
+    transition: transform .15s ease;
+  }
+  .levelup-btn:hover { transform: translateY(-1px); }
+  .levelup-dismiss {
+    background: transparent; border: 1px solid var(--line);
+    color: var(--muted); padding: 10px 12px;
+    border-radius: 10px; font-size: 12px;
+    cursor: pointer; font-family: inherit;
+  }
+
+  /* SETTINGS PANEL */
+  .settings-panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin: 0 0 18px;
+    animation: slideDown .3s ease;
+  }
+  .settings-panel h3 {
+    margin: 0 0 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sun);
+    font-weight: 700;
+  }
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .setting-row:last-of-type { border-bottom: none; }
+  .setting-info { flex: 1; min-width: 0; }
+  .setting-info strong {
+    display: block;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+  .setting-info span {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .switch {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    background: var(--card-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all .2s ease;
+    flex-shrink: 0;
+  }
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    background: var(--muted);
+    border-radius: 50%;
+    transition: all .2s ease;
+  }
+  .switch.on {
+    background: rgba(242,165,124,.2);
+    border-color: var(--sun);
+  }
+  .switch.on::after {
+    left: 23px;
+    background: var(--sun);
+    box-shadow: 0 0 12px rgba(242,165,124,.6);
+  }
+  .time-input {
+    background: var(--card-2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    letter-spacing: 1px;
+    width: 90px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .time-input:focus { outline: none; border-color: var(--sun); }
+  .notif-status {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 12px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: var(--card-2);
+  }
+  .notif-status.ok { color: var(--bamboo); }
+  .notif-status.err { color: #ff7878; }
+  .settings-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .settings-actions button {
+    flex: 1;
+    background: var(--card-2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .settings-actions button:hover {
+    border-color: var(--sun);
+    color: var(--sun);
+  }
+  .settings-actions button.primary {
+    background: linear-gradient(135deg, var(--sun), var(--sun-deep));
+    color: #1a0a04;
+    border: none;
+  }
+  .settings-actions button.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(242,165,124,.3);
+  }
+
+  /* iOS hint */
+  .ios-hint {
+    background: var(--card);
+    border: 1px solid var(--sun);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: var(--text);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: slideDown .3s ease;
+  }
+  .ios-hint strong { color: var(--sun); }
+  .ios-hint .close-ios {
+    background: transparent; border: none;
+    color: var(--muted); font-size: 18px;
+    cursor: pointer; padding: 0 4px;
+    margin-left: auto; line-height: 1;
+  }
+
+  .cta {
+    margin-top: 28px; width: 100%;
+    -webkit-appearance: none; appearance: none;
+    background: linear-gradient(135deg, var(--bamboo), var(--bamboo-dim));
+    color: #0a1408; border: none; padding: 18px;
+    font-size: 16px; font-weight: 700; letter-spacing: .5px;
+    border-radius: 16px; cursor: pointer; font-family: inherit;
+    box-shadow: 0 10px 30px rgba(127,176,105,.25);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(127,176,105,.4); }
+  .cta:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+  /* ROUTINE SCREEN */
+  .rtop {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .back {
+    background: var(--card); border: 1px solid var(--line); color: var(--text);
+    padding: 10px 14px; border-radius: 12px; cursor: pointer;
+    font-size: 14px; font-family: inherit; transition: all .15s ease;
+  }
+  .back:hover { border-color: var(--bamboo-dim); }
+  .timer-box {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--card); border: 1px solid var(--line);
+    padding: 8px 8px 8px 14px; border-radius: 14px;
+  }
+  .timer { font-variant-numeric: tabular-nums; font-size: 18px; font-weight: 700; color: var(--gold); min-width: 62px; }
+  .timer-btn {
+    background: var(--card-2); border: 1px solid var(--line); color: var(--text);
+    padding: 7px 11px; border-radius: 10px; cursor: pointer;
+    font-size: 13px; font-family: inherit; transition: all .15s ease;
+  }
+  .timer-btn:hover { border-color: var(--bamboo); color: var(--bamboo); }
+
+  .rtitle {
+    font-size: 22px; margin: 4px 0 4px;
+    background: linear-gradient(90deg, #fff 30%, var(--sun));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .rmeta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .tag {
+    font-size: 11px; padding: 5px 10px; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--line); color: var(--muted);
+    text-transform: uppercase; letter-spacing: .8px; font-weight: 600;
+  }
+  .tag.gold { color: var(--gold); border-color: rgba(212,162,76,.3); }
+  .tag.bamboo { color: var(--bamboo); border-color: rgba(127,176,105,.3); }
+  .tag.sun { color: var(--sun); border-color: rgba(242,165,124,.35); }
+
+  .block { margin-bottom: 26px; }
+  .block-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .block-head h3 { margin: 0; font-size: 15px; letter-spacing: .5px; }
+  .block-head span { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .ex {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: all .2s ease;
+  }
+  .ex:hover { border-color: var(--bamboo-dim); }
+  .ex.done { opacity: .5; }
+  .ex.done .ex-name { text-decoration: line-through; }
+
+  .check {
+    width: 22px; height: 22px; border-radius: 8px;
+    border: 1.5px solid var(--line); flex-shrink: 0; margin-top: 2px;
+    display: grid; place-items: center; font-size: 13px;
+    transition: all .15s ease; cursor: pointer;
+  }
+  .check:hover { border-color: var(--bamboo-dim); }
+  .ex.done .check { background: var(--bamboo); border-color: var(--bamboo); color: #0a1408; }
+
+  .ex-body { flex: 1; min-width: 0; cursor: pointer; }
+  .ex-name { font-weight: 600; font-size: 15px; }
+  .ex-cue { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .ex-side {
+    text-align: right; flex-shrink: 0; display: flex;
+    flex-direction: column; gap: 4px; align-items: flex-end;
+  }
+  .ex-reps { font-size: 13px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .ex-time { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .action-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .howto-toggle, .zen-toggle {
+    background: transparent; border: 1px solid var(--line);
+    font-family: inherit; font-size: 12px;
+    padding: 6px 12px; border-radius: 999px;
+    cursor: pointer; transition: all .15s ease;
+  }
+  .howto-toggle { color: var(--bamboo); }
+  .howto-toggle:hover { background: rgba(127,176,105,.08); border-color: var(--bamboo); }
+  .zen-toggle { color: var(--sun); border-color: rgba(242,165,124,.35); }
+  .zen-toggle:hover { background: rgba(242,165,124,.1); border-color: var(--sun); }
+
+  .howto {
+    margin-top: 12px; padding: 14px 14px 12px;
+    background: var(--card-2);
+    border-left: 3px solid var(--bamboo);
+    border-radius: 10px;
+    animation: slideDown .25s ease;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .howto h4 {
+    margin: 0 0 10px; font-size: 12px; text-transform: uppercase;
+    letter-spacing: 1.2px; color: var(--bamboo);
+  }
+  .howto ol { margin: 0 0 10px; padding-left: 20px; font-size: 13.5px; line-height: 1.6; }
+  .howto ol li { margin-bottom: 6px; color: #d4e0d4; }
+  .howto .tips {
+    background: rgba(242,165,124,.06);
+    border-left: 3px solid var(--sun);
+    padding: 8px 12px; border-radius: 6px;
+    margin: 10px 0; font-size: 12.5px;
+  }
+  .howto .tips strong { color: var(--sun); display: block; margin-bottom: 4px; }
+  .howto .tips ul { margin: 0; padding-left: 18px; }
+  .howto .tips li { margin-bottom: 3px; }
+  .video-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 8px;
+    background: rgba(242,165,124,.1);
+    color: var(--sun); text-decoration: none;
+    padding: 7px 12px; border-radius: 8px;
+    font-size: 12.5px; font-weight: 500;
+    border: 1px solid rgba(242,165,124,.25);
+    transition: all .15s ease;
+  }
+  .video-link:hover { background: rgba(242,165,124,.2); }
+
+  .finish-btn {
+    margin-top: 24px; width: 100%;
+    background: linear-gradient(135deg, rgba(127,176,105,.15), rgba(127,176,105,.05));
+    border: 1.5px solid var(--bamboo);
+    color: var(--bamboo); font-family: inherit;
+    padding: 16px; border-radius: 16px;
+    font-size: 15px; font-weight: 700; letter-spacing: .5px;
+    cursor: pointer; transition: all .2s ease;
+  }
+  .finish-btn:hover { background: rgba(127,176,105,.2); transform: translateY(-1px); }
+  .finish-btn.saved {
+    background: linear-gradient(135deg, var(--bamboo), var(--bamboo-dim));
+    color: #0a1408;
+  }
+  .footer-note {
+    text-align: center; color: var(--muted); font-size: 12px;
+    margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--line);
+  }
+  .footer-note .credit { color: var(--sun); }
+
+  /* ZEN MODE */
+  .zen {
+    position: fixed; inset: 0; z-index: 100;
+    background: radial-gradient(circle at center, #0a1410 0%, #000 75%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px;
+    animation: fadeIn .35s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .zen-progress {
+    position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
+    color: var(--muted); font-size: 12px; letter-spacing: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .zen-block {
+    position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+    color: var(--bamboo); font-size: 12px; text-transform: uppercase;
+    letter-spacing: 2.5px; font-weight: 600;
+    text-align: center; max-width: 80vw;
+  }
+  .zen-breath-wrap {
+    position: relative; width: 280px; height: 280px;
+    display: grid; place-items: center;
+    margin-bottom: 36px;
+  }
+  .zen-breath-ring, .zen-breath-ring-2 {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(127,176,105,.4);
+    pointer-events: none;
+  }
+  .zen-breath-ring { animation: breathe 16s ease-in-out infinite; }
+  .zen-breath-ring-2 {
+    border-color: rgba(242,165,124,.15);
+    animation: breathe-outer 16s ease-in-out infinite;
+  }
+  .zen.paused .zen-breath-ring,
+  .zen.paused .zen-breath-ring-2 { animation-play-state: paused; }
+  @keyframes breathe {
+    0%   { transform: scale(1);    border-color: rgba(127,176,105,.35); box-shadow: 0 0 30px rgba(127,176,105,.15), inset 0 0 30px rgba(127,176,105,.08); }
+    25%  { transform: scale(1.22); border-color: rgba(242,165,124,.7);  box-shadow: 0 0 70px rgba(242,165,124,.5),  inset 0 0 60px rgba(242,165,124,.2); }
+    50%  { transform: scale(1.22); border-color: rgba(242,165,124,.7);  box-shadow: 0 0 70px rgba(242,165,124,.5),  inset 0 0 60px rgba(242,165,124,.2); }
+    75%  { transform: scale(1);    border-color: rgba(127,176,105,.35); box-shadow: 0 0 30px rgba(127,176,105,.15), inset 0 0 30px rgba(127,176,105,.08); }
+    100% { transform: scale(1);    border-color: rgba(127,176,105,.35); box-shadow: 0 0 30px rgba(127,176,105,.15), inset 0 0 30px rgba(127,176,105,.08); }
+  }
+  @keyframes breathe-outer {
+    0%   { transform: scale(1);    opacity: .4; }
+    25%  { transform: scale(1.35); opacity: .9; }
+    50%  { transform: scale(1.35); opacity: .9; }
+    75%  { transform: scale(1);    opacity: .4; }
+    100% { transform: scale(1);    opacity: .4; }
+  }
+  .zen-inner {
+    position: relative; z-index: 2; display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+  }
+  .zen-timer {
+    font-size: 68px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    color: #fff; line-height: 1;
+    text-shadow: 0 0 40px rgba(255,255,255,.25);
+  }
+  .zen-phase {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 4px;
+    color: var(--bamboo); height: 14px;
+  }
+  .zen-name {
+    font-size: 22px; font-weight: 600;
+    text-align: center; max-width: 520px;
+    padding: 0 12px;
+  }
+  .zen-cue {
+    margin-top: 8px; color: var(--muted); font-size: 14px;
+    text-align: center; max-width: 480px; padding: 0 12px;
+  }
+  .zen-reps {
+    margin-top: 10px; color: var(--gold); font-weight: 700; font-size: 17px;
+    letter-spacing: 1px;
+  }
+  .zen-controls {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 14px; align-items: center;
+  }
+  .zen-btn {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+    color: #fff; width: 52px; height: 52px; border-radius: 50%;
+    cursor: pointer; font-size: 18px; font-family: inherit;
+    display: grid; place-items: center;
+    transition: all .15s ease;
+  }
+  .zen-btn:hover { background: rgba(127,176,105,.2); border-color: var(--bamboo); color: var(--bamboo); }
+  .zen-btn.primary {
+    width: 68px; height: 68px; font-size: 24px;
+    background: rgba(242,165,124,.15); border-color: var(--sun); color: var(--sun);
+  }
+  .zen-btn.primary:hover { background: rgba(242,165,124,.3); }
+  .zen-btn.exit { border-color: rgba(255,120,120,.3); }
+  .zen-btn.exit:hover { background: rgba(255,120,120,.15); border-color: #ff7878; color: #ff7878; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--card-2); border: 1px solid var(--sun);
+    color: var(--text); padding: 14px 22px; border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.6), 0 0 30px rgba(242,165,124,.2);
+    font-size: 14px; z-index: 200;
+    animation: toastIn .35s ease;
+    max-width: 90vw; text-align: center;
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    .group.cols-3 { grid-template-columns: 1fr 1fr; }
+    .zen-timer { font-size: 56px; }
+    .zen-breath-wrap { width: 240px; height: 240px; }
+    .install-btn { padding: 8px 10px; font-size: 11.5px; }
+    .install-btn .btn-text { display: none; }
+    .settings-panel { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= SELECT SCREEN ================= -->
+  <section id="selectScreen">
+    <header class="top">
+      <div class="logo">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="sunLogo" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f2a57c"/>
+              <stop offset="1" stop-color="#c96f4a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="30" r="21" fill="url(#sunLogo)"/>
+          <rect x="21" y="12" width="4.5" height="44" rx="2.25" fill="#1a241c"/>
+          <rect x="21" y="22" width="4.5" height="1.2" fill="#f2a57c"/>
+          <rect x="21" y="34" width="4.5" height="1.2" fill="#f2a57c"/>
+          <rect x="38.5" y="16" width="4.5" height="40" rx="2.25" fill="#1a241c"/>
+          <rect x="38.5" y="26" width="4.5" height="1.2" fill="#f2a57c"/>
+          <rect x="38.5" y="38" width="4.5" height="1.2" fill="#f2a57c"/>
+        </svg>
+      </div>
+      <div class="brand">
+        <h1>FlowForce</h1>
+        <p>Calistenia · Tai Chi · <span class="credit">by Ohmygoch</span></p>
+        <p class="tagline">fuerza flexible, calma profunda</p>
+      </div>
+      <button class="settings-btn" id="settingsBtn" aria-label="Ajustes" title="Ajustes">⚙️</button>
+      <button class="install-btn hidden" id="installBtn" aria-label="Instalar app">
+        <span>📲</span><span class="btn-text">Instalar</span>
+      </button>
+    </header>
+
+    <!-- Panel de ajustes -->
+    <div class="settings-panel hidden" id="settingsPanel">
+      <h3>⚙️ Ajustes</h3>
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>🔔 Recordatorio diario</strong>
+          <span>Notificación a la hora que elijas</span>
+        </div>
+        <div class="switch" id="notifSwitch" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>🕐 Hora del recordatorio</strong>
+          <span>Se repite todos los días</span>
+        </div>
+        <input type="time" class="time-input" id="notifTime" value="07:00" />
+      </div>
+      <div class="notif-status" id="notifStatus">Estado: desconocido</div>
+      <div class="settings-actions">
+        <button id="testNotifBtn" type="button">🔔 Probar</button>
+        <button class="primary" id="saveNotifBtn" type="button">Guardar</button>
+      </div>
+    </div>
+
+    <div id="levelUpBanner"></div>
+
+    <h2 class="step">1 · Objetivo</h2>
+    <div class="group cols-2" id="groupObjective">
+      <button class="pill" data-value="strength">💪 Fuerza<span class="sub">Músculo y potencia</span></button>
+      <button class="pill" data-value="mobility">🌊 Movilidad<span class="sub">Rango y flexibilidad</span></button>
+      <button class="pill" data-value="calm">🧘 Calma<span class="sub">Estrés y respiración</span></button>
+      <button class="pill" data-value="skill">🎯 Skills<span class="sub">Pino, lever, planche</span></button>
+      <button class="pill" data-value="hybrid" style="grid-column: 1 / -1;">☯ Yin-Yang<span class="sub">Fuerza + flow en una sesión</span></button>
+    </div>
+
+    <h2 class="step">2 · Nivel</h2>
+    <div class="group cols-3" id="groupLevel">
+      <button class="pill" data-value="1">🌱 Semilla<span class="sub">Principiante</span></button>
+      <button class="pill" data-value="2">🌿 Raíz<span class="sub">Intermedio</span></button>
+      <button class="pill" data-value="3">🌳 Tronco<span class="sub">Avanzado</span></button>
+    </div>
+
+    <h2 class="step">3 · Tiempo</h2>
+    <div class="group cols-3" id="groupTime">
+      <button class="pill" data-value="10">10 min<span class="sub">Express</span></button>
+      <button class="pill" data-value="20">20 min<span class="sub">Estándar</span></button>
+      <button class="pill" data-value="40">40 min<span class="sub">Completo</span></button>
+    </div>
+
+    <button class="cta" id="generateBtn" disabled>Generar rutina →</button>
+  </section>
+
+  <!-- ================= ROUTINE SCREEN ================= -->
+  <section id="routineScreen" class="hidden">
+    <div class="rtop">
+      <button class="back" id="backBtn">← Volver</button>
+      <div class="timer-box">
+        <span class="timer" id="timerDisplay">00:00</span>
+        <button class="timer-btn" id="timerToggle">▶</button>
+        <button class="timer-btn" id="timerReset">⟲</button>
+      </div>
+    </div>
+
+    <h2 class="rtitle" id="routineTitle"></h2>
+    <div class="rmeta" id="routineMeta"></div>
+
+    <div id="blocksContainer"></div>
+
+    <button class="finish-btn" id="finishBtn">✅ Terminar sesión</button>
+
+    <div class="footer-note">
+      Escuchá a tu cuerpo. Si algo duele, pará.<br/>
+      Tocá <strong style="color:var(--bamboo)">📖 Cómo se hace</strong> para ver los pasos · <strong style="color:var(--sun)">▶ Zen</strong> para modo inmersivo.<br/>
+      <span class="credit">FlowForce · by Ohmygoch</span>
+    </div>
+  </section>
+
+</div>
+
+<!-- ZEN MODE -->
+<section id="zenScreen" class="zen hidden">
+  <div class="zen-progress" id="zenProgress">1 / 1</div>
+  <div class="zen-block" id="zenBlock"></div>
+  <div class="zen-breath-wrap">
+    <div class="zen-breath-ring"></div>
+    <div class="zen-breath-ring-2"></div>
+    <div class="zen-inner">
+      <div class="zen-timer" id="zenTimer">00:00</div>
+      <div class="zen-phase" id="zenPhase">Inhalá</div>
+    </div>
+  </div>
+  <div class="zen-name" id="zenName"></div>
+  <div class="zen-cue" id="zenCue"></div>
+  <div class="zen-reps" id="zenReps"></div>
+  <div class="zen-controls">
+    <button class="zen-btn exit" id="zenExit" title="Salir">✕</button>
+    <button class="zen-btn" id="zenPrev" title="Anterior">◀</button>
+    <button class="zen-btn primary" id="zenPlay" title="Play/Pause">▶</button>
+    <button class="zen-btn" id="zenNext" title="Siguiente">▶</button>
+  </div>
+</section>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<script>
+/* ============================================================
+   POOL DE EJERCICIOS
+   ============================================================ */
+const POOL = {
+  c_warmup: {
+    1: [
+      { name: 'Marcha en el lugar', cue: 'Respirá profundo, aflojá hombros', time: 60,
+        steps: ['Pies al ancho de cadera, brazos relajados al costado.', 'Levantá una rodilla a la altura de la cadera.', 'Bajá y alterná con la otra pierna.', 'Balanceá los brazos de forma natural.'],
+        tips: ['Respirá por la nariz.', 'Ritmo cómodo, no es una carrera.'] },
+      { name: 'Círculos de brazos', cue: '10 adelante, 10 atrás, amplios', time: 45,
+        steps: ['Parate erguido, brazos extendidos a los costados.', 'Hacé círculos amplios hacia adelante.', 'A las 10 repeticiones, cambiá el sentido.', 'Mantené el torso quieto.'],
+        tips: ['Empezá con círculos chicos y agrandalos.', 'Hombros abajo, cuello relajado.'] },
+      { name: 'Rotación de cadera', cue: 'Manos en cintura, círculos lentos', time: 45,
+        steps: ['Pies al ancho de hombros, manos en la cintura.', 'Dibujá círculos amplios con la cadera.', '10 vueltas en sentido horario.', 'Cambiá a antihorario por 10 más.'],
+        tips: ['Movimiento lento, sentí el rango.', 'Rodillas ligeramente flexionadas.'] },
+    ],
+    2: [
+      { name: 'Jumping jacks suaves', cue: 'Ritmo cómodo, respiración constante', time: 60,
+        steps: ['Parado, pies juntos, brazos al costado.', 'Saltá abriendo piernas y subiendo brazos arriba.', 'Volvé a la posición inicial en el mismo salto.', 'Mantené ritmo suave y constante.'],
+        tips: ['Aterrizá con rodillas blandas.', 'Respirá en cada ciclo.'] },
+      { name: 'Círculos de brazos + escápulas', cue: 'Activá la espalda alta', time: 60,
+        steps: ['Brazos extendidos a los costados.', 'Hacé 10 círculos grandes hacia atrás.', 'Luego juntá escápulas como si sostuvieras un lápiz entre ellas.', 'Sostené 3 segundos, soltá y repetí 10 veces.'],
+        tips: ['No eleves los hombros al juntar escápulas.', 'Activá la espalda alta.'] },
+      { name: 'Sentadillas sin peso', cue: 'Rodillas alineadas con pies', time: 60,
+        steps: ['Pies al ancho de hombros, puntas ligeramente hacia afuera.', 'Bajá como si te sentaras en una silla.', 'Rodillas alineadas con la punta de los pies.', 'Subí apretando glúteos al final.'],
+        tips: ['Talones siempre en el suelo.', 'Pecho arriba, mirada al frente.'] },
+    ],
+    3: [
+      { name: 'Burpees lentos', cue: 'Controlá cada fase, no es sprint', time: 60,
+        steps: ['De pie, bajá en sentadilla y apoyá las manos.', 'Caminá los pies hacia atrás hasta plancha.', 'Hacé una flexión completa (o adaptada).', 'Volvé caminando los pies y saltá suave.'],
+        tips: ['Sin prisa, controlá cada fase.', 'Adaptá la flexión a tu nivel.'] },
+      { name: 'Dislocaciones con palo', cue: 'Hombros móviles, sin dolor', time: 60,
+        steps: ['Sostené un palo o toalla con agarre amplio.', 'Brazos rectos, subí el palo por delante.', 'Pasalo por encima de la cabeza hasta la espalda.', 'Volvé al frente sin doblar codos.'],
+        tips: ['Empezá con agarre muy amplio.', 'Si duele el hombro, no fuerces.'] },
+      { name: 'Sentadilla profunda + movilidad', cue: 'Talones en el suelo', time: 60,
+        steps: ['Pies un poco más anchos que hombros.', 'Bajá todo lo que puedas, talones en el suelo.', 'En el punto bajo, movilizá rodillas y cadera.', 'Sostené 30-45 seg antes de subir.'],
+        tips: ['Usá codos contra rodillas para abrir cadera.', 'Respirá profundo en la posición.'] },
+    ],
+  },
+  c_push: {
+    1: [
+      { name: 'Flexiones en pared', reps: '3×8', cue: 'Cuerpo en línea, codos cerca', time: 120,
+        steps: ['Parate a un paso de la pared.', 'Apoyá las manos a la altura del pecho.', 'Cuerpo recto como una tabla.', 'Bajá el pecho a la pared y empujá para volver.'],
+        tips: ['Codos a 45°, no abiertos al 90°.', 'Glúteos y abdomen activos.'] },
+      { name: 'Flexiones inclinadas', reps: '3×8', cue: 'Manos en banca o mesa', time: 120,
+        steps: ['Apoyá las manos en una banca o mesa firme.', 'Pies atrás, cuerpo en línea recta.', 'Bajá el pecho a la superficie.', 'Empujá hasta extender codos.'],
+        tips: ['A más altura, más fácil.', 'No dejes caer la cadera.'] },
+      { name: 'Flexiones con rodillas', reps: '3×6', cue: 'Core activo, no hundas cadera', time: 120,
+        steps: ['Apoyá rodillas y manos en el suelo.', 'Cuerpo recto desde cabeza a rodillas.', 'Bajá el pecho hasta casi tocar el suelo.', 'Empujá para volver arriba.'],
+        tips: ['Activá abdomen para no arquear lumbar.', 'Codos a 45° del torso.'] },
+    ],
+    2: [
+      { name: 'Flexiones completas', reps: '4×8', cue: 'Pecho al suelo, codos 45°', time: 150,
+        steps: ['Manos a la altura de los hombros, pies juntos.', 'Cuerpo en línea recta desde cabeza a talones.', 'Bajá hasta que el pecho casi toque el suelo.', 'Empujá hasta extender codos.'],
+        tips: ['Codos a 45°, no al 90° abierto.', 'Mirada al suelo, cuello neutro.'] },
+      { name: 'Flexiones diamante', reps: '3×6', cue: 'Manos juntas, foco tríceps', time: 130,
+        steps: ['Manos juntas formando un diamante bajo el pecho.', 'Cuerpo en línea recta, pies juntos.', 'Bajá el pecho hacia las manos.', 'Empujá con foco en tríceps.'],
+        tips: ['Más difícil que la flexión normal.', 'Si duele la muñeca, separá un poco las manos.'] },
+      { name: 'Dips en silla', reps: '3×8', cue: 'Bajá hasta 90° de codo', time: 130,
+        steps: ['Sentate al borde de una silla, manos al lado de la cadera.', 'Deslizá la cola fuera del asiento.', 'Bajá flexionando codos hasta 90°.', 'Empujá para volver arriba.'],
+        tips: ['Hombros abajo, no los subas a las orejas.', 'Codos hacia atrás, no a los costados.'] },
+    ],
+    3: [
+      { name: 'Flexiones arqueras', reps: '4×5/lado', cue: 'Brazo recto lateral, el otro flexiona', time: 180,
+        steps: ['Manos más anchas que hombros.', 'Bajá hacia un lado flexionando ese codo.', 'El brazo opuesto queda recto.', 'Empujá y alterná al otro lado.'],
+        tips: ['Cuerpo recto, no rotes la cadera.', 'Progresión hacia la flexión a una mano.'] },
+      { name: 'Flexiones declinadas', reps: '4×10', cue: 'Pies elevados, core firme', time: 160,
+        steps: ['Apoyá los pies en una silla o escalón.', 'Manos a la altura de hombros en el suelo.', 'Bajá controlado, pecho al suelo.', 'Empujá hasta extensión.'],
+        tips: ['Más carga en hombros y pecho superior.', 'Mantené el core bien firme.'] },
+      { name: 'Pike push-up', reps: '3×5', cue: 'Cadera arriba, mirada al suelo', time: 160,
+        steps: ['Desde plancha, caminá los pies hacia las manos.', 'Cadera bien alta, cuerpo en V invertida.', 'Bajá la cabeza hacia el suelo entre las manos.', 'Empujá hasta extender codos.'],
+        tips: ['Es la base para el pino.', 'Mirada entre las manos.'] },
+    ],
+  },
+  c_pull: {
+    1: [
+      { name: 'Colgado pasivo en barra', cue: 'Solo agarrá y colgá, 20-30s', time: 90,
+        steps: ['Agarre prono, manos al ancho de hombros.', 'Cuelgate con brazos completamente extendidos.', 'Hombros activos, no 100% relajados.', 'Sostené 20-30 segundos.'],
+        tips: ['Si no llegás al tiempo, acumulá series.', 'Trabajá el agarre y la descompresión.'] },
+      { name: 'Remo con toalla', reps: '3×10', cue: 'Tirá con codos, no con manos', time: 120,
+        steps: ['Pasá una toalla por una manija o barra firme.', 'Tomá un extremo en cada mano.', 'Inclinate hacia atrás con cuerpo recto.', 'Tirá de la toalla llevando el pecho hacia adelante.'],
+        tips: ['A más inclinación, más difícil.', 'Apretá escápulas al final.'] },
+      { name: 'Australianas altas', reps: '3×8', cue: 'Barra a la altura del pecho', time: 130,
+        steps: ['Barra a la altura del pecho.', 'Agarre prono, colgate debajo.', 'Talones en el suelo, cuerpo recto.', 'Tirá del pecho a la barra y bajá controlado.'],
+        tips: ['Más alta la barra, más fácil.', 'No dejes caer la cadera.'] },
+    ],
+    2: [
+      { name: 'Dominadas negativas', reps: '4×3', cue: 'Bajá en 5 seg, controlá', time: 150,
+        steps: ['Saltá o subí a la barra hasta quedar arriba.', 'Mentón por encima de la barra.', 'Bajá lo más lento posible (4-5 seg).', 'Repetí desde arriba.'],
+        tips: ['El control es más importante que las reps.', 'Fase excéntrica = base de la dominada.'] },
+      { name: 'Australianas en barra baja', reps: '4×8', cue: 'Cuerpo recto, pecho a barra', time: 140,
+        steps: ['Barra a la altura de la cadera.', 'Colgate debajo con agarre prono.', 'Cuerpo recto desde cabeza a talones.', 'Pecho a la barra, bajá controlado.'],
+        tips: ['Pies adelante = más difícil.', 'Retraé escápulas al iniciar.'] },
+      { name: 'Remo en anillas o toalla', reps: '3×10', cue: 'Apretá escápulas al final', time: 130,
+        steps: ['Anillas o toalla a un punto firme.', 'Cuerpo inclinado hacia atrás, pies adelante.', 'Brazos extendidos, pecho afuera.', 'Tirá hasta la altura del pecho.'],
+        tips: ['Cuanto más horizontal el cuerpo, más difícil.', 'Codos pegados al torso.'] },
+    ],
+    3: [
+      { name: 'Dominadas estrictas', reps: '5×5', cue: 'Sin balanceo, mentón sobre barra', time: 200,
+        steps: ['Agarre prono, manos al ancho de hombros.', 'Cuelgate con brazos extendidos.', 'Tirá con la espalda, no con brazos.', 'Mentón sobre la barra, bajá controlado.'],
+        tips: ['Sin balanceo ni kipping.', 'Codos hacia abajo y atrás.'] },
+      { name: 'Dominadas arqueras', reps: '4×4/lado', cue: 'Un brazo estira, el otro tira', time: 180,
+        steps: ['Agarre amplio en la barra.', 'Tirá más hacia un lado, flexionando ese brazo.', 'El otro brazo queda casi recto.', 'Bajá y alterná.'],
+        tips: ['Progresión hacia la dominada a una mano.', 'Controlá la fase de bajada.'] },
+      { name: 'Muscle-up (progresión)', reps: '4×2', cue: 'Transición rápida, pecho a barra', time: 180,
+        steps: ['Colgate con agarre prono y falso (muñeca sobre barra).', 'Tirá explosivo llevando el pecho a la barra.', 'Girá los codos por encima y pasá el torso.', 'Empujá hasta extender brazos arriba.'],
+        tips: ['Entrená dominadas altas primero.', 'La transición es la parte más difícil.'] },
+    ],
+  },
+  c_legs: {
+    1: [
+      { name: 'Sentadillas asistidas', reps: '3×10', cue: 'Sujetate de algo, bajá controlado', time: 110,
+        steps: ['Parate frente a una silla o manija firme.', 'Sujetate con una o dos manos.', 'Bajá como si te sentaras.', 'Subí empujando con las piernas.'],
+        tips: ['Ideal para aprender el patrón.', 'Talones siempre apoyados.'] },
+      { name: 'Puente de glúteo', reps: '3×12', cue: 'Apretá glúteo arriba, 1 seg', time: 90,
+        steps: ['Acostate boca arriba, rodillas flexionadas.', 'Pies al ancho de cadera, pegados al glúteo.', 'Empujá con talones y elevá la cadera.', 'Apretá glúteos arriba 1 seg y bajá.'],
+        tips: ['No arquees lumbar al subir.', 'Activá abdomen.'] },
+      { name: 'Elevación de gemelos', reps: '3×15', cue: 'Subí lento, bajá más lento', time: 90,
+        steps: ['Parado, pies al ancho de cadera.', 'Apoyate en una pared para equilibrio.', 'Subí los talones lo más alto posible.', 'Bajá lento hasta el suelo.'],
+        tips: ['Subí 1 seg, bajá 2 seg.', 'Trabajá también a una pierna si es fácil.'] },
+    ],
+    2: [
+      { name: 'Sentadilla búlgara', reps: '3×8/pierna', cue: 'Pie trasero en silla, torso erguido', time: 150,
+        steps: ['Pie trasero apoyado en una silla baja.', 'Pie delantero un paso adelante.', 'Bajá flexionando la rodilla delantera.', 'Rodilla delantera alineada con el pie.'],
+        tips: ['Torso erguido.', 'Si perdés equilibrio, achicá el paso.'] },
+      { name: 'Zancadas alternas', reps: '3×10', cue: 'Rodilla trasera casi al suelo', time: 130,
+        steps: ['De pie, pies al ancho de cadera.', 'Da un paso largo hacia adelante.', 'Bajá hasta que la rodilla trasera casi toque el suelo.', 'Empujá con la pierna delantera y alterná.'],
+        tips: ['Torso erguido, mirada al frente.', 'Rodilla delantera no pasa la punta del pie.'] },
+      { name: 'Peso muerto a una pierna', reps: '3×8/lado', cue: 'Cadera cuadrada, controlá', time: 130,
+        steps: ['Parado sobre una pierna, la otra apenas apoyada.', 'Bisagra de cadera, bajá el torso hacia adelante.', 'La pierna libre se extiende atrás.', 'Volvé apretando glúteo.'],
+        tips: ['Cadera cuadrada, no rotes.', 'Espalda recta durante todo el movimiento.'] },
+    ],
+    3: [
+      { name: 'Pistol squat (progresión)', reps: '4×4/lado', cue: 'Asistite con una mano si hace falta', time: 180,
+        steps: ['Parado sobre una pierna, la otra extendida al frente.', 'Bajá controlado llevando la cadera atrás.', 'Asistite con una mano si hace falta.', 'Subí empujando con el talón.'],
+        tips: ['Usá una silla baja como referencia.', 'Movilidad de tobillo es clave.'] },
+      { name: 'Sentadilla con salto', reps: '4×8', cue: 'Aterrizá suave, absorbé', time: 140,
+        steps: ['Pies al ancho de hombros.', 'Bajá en sentadilla normal.', 'Saltá explosivo hacia arriba.', 'Aterrizá suave con rodillas blandas.'],
+        tips: ['Aterrizaje silencioso.', 'No hagas muchas reps si te falta técnica.'] },
+      { name: 'Nordic curl (progresión)', reps: '3×4', cue: 'Bajá lo más lento posible', time: 150,
+        steps: ['Arrodillate, pies sujetos por algo firme.', 'Cuerpo recto desde rodillas a cabeza.', 'Bajá lo más lento posible resistiendo.', 'Apoyá las manos si no llegás.'],
+        tips: ['Fase excéntrica brutal, pocas reps.', 'Cuidá los isquios, no fuerces.'] },
+    ],
+  },
+  c_core: {
+    1: [
+      { name: 'Plancha frontal', reps: '3×20s', cue: 'Cuerpo recto, glúteo activo', time: 90,
+        steps: ['Apoyá antebrazos y puntas de pies.', 'Codos debajo de hombros.', 'Cuerpo recto desde cabeza a talones.', 'Sostené el tiempo respirando.'],
+        tips: ['No dejes caer la cadera.', 'Apretá glúteo y abdomen.'] },
+      { name: 'Dead bug', reps: '3×8', cue: 'Lumbar pegada al suelo', time: 100,
+        steps: ['Boca arriba, brazos al techo, rodillas a 90°.', 'Lumbar pegada al suelo.', 'Bajá brazo derecho y pierna izquierda a la vez.', 'Volvé y alterná.'],
+        tips: ['Si se despega la lumbar, achicá el rango.', 'Movimiento lento y controlado.'] },
+      { name: 'Hollow hold rodillas', reps: '3×15s', cue: 'Costillas abajo, sin arquear', time: 90,
+        steps: ['Boca arriba, rodillas flexionadas al pecho.', 'Elevá cabeza y hombros del suelo.', 'Brazos extendidos al frente.', 'Sostené apretando abdomen.'],
+        tips: ['Costillas abajo, no arquees.', 'Progresión hacia hollow body.'] },
+    ],
+    2: [
+      { name: 'Plancha frontal', reps: '3×45s', cue: 'Respirá, no apretés el cuello', time: 150,
+        steps: ['Antebrazos y pies apoyados.', 'Cuerpo en línea recta.', 'Activá abdomen y glúteos.', 'Respirá sostenido el tiempo indicado.'],
+        tips: ['No subas la cadera.', 'Mirada al suelo, cuello neutro.'] },
+      { name: 'Hollow body', reps: '3×20s', cue: 'Brazos y piernas extendidos', time: 130,
+        steps: ['Boca arriba, brazos extendidos arriba.', 'Elevá piernas y hombros del suelo.', 'Formá una banana con el cuerpo.', 'Sostené apretando abdomen.'],
+        tips: ['Lumbar siempre apoyada.', 'Si duele, flexioná un poco las piernas.'] },
+      { name: 'L-sit tuck', reps: '3×10s', cue: 'Empujá el suelo, hombros abajo', time: 120,
+        steps: ['Manos en paralelas o suelo, brazos rectos.', 'Empujá el suelo con los hombros.', 'Llevá rodillas al pecho.', 'Sostené con cuerpo lo más recto posible.'],
+        tips: ['Hombros abajo, no encogidos.', 'Progresión hacia L-sit completo.'] },
+    ],
+    3: [
+      { name: 'L-sit completo', reps: '4×10s', cue: 'Piernas rectas paralelas al suelo', time: 160,
+        steps: ['Manos apoyadas, brazos completamente rectos.', 'Empujá el suelo y bajá los hombros.', 'Piernas extendidas paralelas al suelo.', 'Sostené sin dejar caer la cadera.'],
+        tips: ['Preparación clave: tuck holds.', 'Compresión de cadera importante.'] },
+      { name: 'Dragon flag', reps: '3×5', cue: 'Bajá lento, sin tocar el suelo', time: 160,
+        steps: ['Acostado, manos agarradas detrás de la cabeza.', 'Subí piernas y cadera hasta vertical.', 'Bajá lento con cuerpo recto.', 'Sin tocar el suelo del todo.'],
+        tips: ['Base: hollow body sólido.', 'Pocas reps, foco en control.'] },
+      { name: 'Plancha frontal con toque hombro', reps: '3×10', cue: 'Cadera no rota', time: 130,
+        steps: ['Posición de plancha alta (brazos rectos).', 'Tocá el hombro opuesto con una mano.', 'Volvé al suelo, mantené cadera estable.', 'Alterná lados sin apurarte.'],
+        tips: ['Pies más separados = más estabilidad.', 'No rotes la cadera.'] },
+    ],
+  },
+  c_skill: {
+    1: [
+      { name: 'Pino en pared (pecho a pared)', reps: '3×30s', cue: 'Empujá el suelo, cuerpo alineado', time: 120,
+        steps: ['Manos a 20-30 cm de la pared.', 'Pateá una pierna y subí a la pared.', 'Pecho a la pared, cuerpo alineado.', 'Sostené apretando abdomen.'],
+        tips: ['Empezá con 20-30 seg.', 'Salí bajando una pierna a la vez.'] },
+      { name: 'Hollow hold en piso', reps: '3×20s', cue: 'Base de todo skill estático', time: 100,
+        steps: ['Boca arriba, brazos extendidos arriba.', 'Elevá piernas y hombros.', 'Lumbar pegada al suelo.', 'Sostené el tiempo indicado.'],
+        tips: ['Base de todos los skills estáticos.', 'Si es muy difícil, flexioná piernas.'] },
+      { name: 'Pike hold', reps: '3×20s', cue: 'Cadera alta, brazos rectos', time: 100,
+        steps: ['Desde plancha, caminá los pies a las manos.', 'Cadera bien alta, cuerpo en V invertida.', 'Brazos rectos, empujá el suelo.', 'Sostené respirando.'],
+        tips: ['Base para pino y HSPU.', 'Talones apuntan al suelo.'] },
+    ],
+    2: [
+      { name: 'Handstand pared (pecho a pared)', reps: '4×30s', cue: 'Alineación: cadera sobre hombros', time: 160,
+        steps: ['Manos a 10-15 cm de la pared.', 'Pateá pierna arriba hasta pegar el pecho.', 'Alineá cadera sobre hombros.', 'Empujá el suelo, cuerpo activo.'],
+        tips: ['Foco en la línea, no en el tiempo.', 'Respirá controlado.'] },
+      { name: 'Tuck front lever', reps: '4×5s', cue: 'Espalda recta, brazos rectos', time: 150,
+        steps: ['Colgate en barra con agarre prono.', 'Activá escápulas, brazos rectos.', 'Llevá rodillas al pecho, cadera atrás.', 'Sostené con espalda recta.'],
+        tips: ['No flexiones codos.', 'Progresión: tuck avanzado luego straddle.'] },
+      { name: 'Tuck planche', reps: '4×5s', cue: 'Hombros protraídos, inclinate adelante', time: 150,
+        steps: ['Manos en el suelo, dedos hacia adelante.', 'Inclinate hacia adelante hasta perder pies.', 'Rodillas al pecho, cuerpo compacto.', 'Brazos rectos, sostené.'],
+        tips: ['Hombros protraídos (adelante).', 'Muñecas preparadas con calentamiento.'] },
+    ],
+    3: [
+      { name: 'Handstand libre', reps: '5×10s', cue: 'Encontrá el balance con dedos', time: 200,
+        steps: ['Manos a 15 cm de la pared al inicio.', 'Pateá arriba y alejate de la pared.', 'Encontrá balance con los dedos.', 'Sostené con cuerpo alineado.'],
+        tips: ['Practicá en colchoneta o pasto.', 'Foco en respiración.'] },
+      { name: 'Front lever (straddle)', reps: '4×5s', cue: 'Cadera abierta, cuerpo recto', time: 180,
+        steps: ['Colgate en barra, brazos rectos.', 'Activá escápulas, retraé.', 'Subí cuerpo hasta horizontal, piernas abiertas.', 'Sostené con cadera alineada.'],
+        tips: ['Cuanto más cerrada la pierna, más difícil.', 'Foco en lat y core.'] },
+      { name: 'Planche lean holds', reps: '4×8s', cue: 'Inclinate hasta el límite', time: 180,
+        steps: ['Posición de flexión, brazos rectos.', 'Dedos hacia adelante o afuera.', 'Inclinate hacia adelante hasta el límite.', 'Sostené sin flexionar codos.'],
+        tips: ['Preparación para planche.', 'Trabajá muñecas antes.'] },
+    ],
+  },
+  c_mobility: {
+    1: [
+      { name: 'Círculos de cadera', reps: '8/lado', cue: 'Círculos lentos y amplios', time: 90,
+        steps: ['De pie, manos en la cintura.', 'Elevá una rodilla al pecho.', 'Dibujá un círculo amplio con la rodilla.', '8 por lado en cada sentido.'],
+        tips: ['Movimiento lento, sin dolor.', 'Buena antes de piernas o tai chi.'] },
+      { name: 'Cat-cow', reps: '10 reps', cue: 'Coordiná con la respiración', time: 90,
+        steps: ['En cuadrupedia, manos bajo hombros.', 'Inhalá, arquá la espalda (vaca).', 'Exhalá, redondeala (gato).', 'Coordinalo con la respiración.'],
+        tips: ['Movimiento desde la columna, no brazos.', '10 reps lentas.'] },
+      { name: 'Apertura de pecho en pared', reps: '2×30s/lado', cue: 'Girá el torso, no fuerces', time: 90,
+        steps: ['Parate al lado de una pared.', 'Apoyá el antebrazo en la pared a 90°.', 'Girá el torso hacia el lado opuesto.', 'Sostené 30 seg por lado.'],
+        tips: ['No fuerces el hombro.', 'Pecho afuera durante el estiramiento.'] },
+    ],
+    2: [
+      { name: '90/90 de cadera', reps: '2×45s/lado', cue: 'Rotación externa e interna', time: 120,
+        steps: ['Sentado, rodilla delantera a 90° y trasera a 90°.', 'Espalda recta, manos al suelo detrás.', 'Alterná rotando las piernas al otro lado.', 'Sin ayuda de las manos si podés.'],
+        tips: ['Foco en rotación de cadera.', 'Movimiento fluido, tipo tai chi.'] },
+      { name: 'Estocada con rotación', reps: '8/lado', cue: 'Rodilla atrás del pie', time: 100,
+        steps: ['Estocada con rodilla trasera casi al suelo.', 'Levantá el brazo del lado de la rodilla delantera.', 'Rotá el torso hacia ese lado.', 'Volvé y alterná.'],
+        tips: ['Rodilla trasera activa.', 'Mové desde la columna torácica.'] },
+      { name: 'Puente completo', reps: '3×15s', cue: 'Abriendo pecho y hombros', time: 110,
+        steps: ['Acostado, pies al ancho de cadera.', 'Manos al lado de las orejas, dedos hacia hombros.', 'Empujá con pies y manos elevando cadera.', 'Abrite en el pecho, respirá.'],
+        tips: ['Si te duele lumbar, no lo hagas.', 'Preparación: puente de glúteo primero.'] },
+    ],
+    3: [
+      { name: 'Pistol asistido (movilidad)', reps: '5/lado', cue: 'Foco en control y rango', time: 140,
+        steps: ['Parado sobre una pierna, la otra extendida.', 'Bajá hasta sentadilla completa.', 'Mantené el talón en el suelo.', 'Subí controlado.'],
+        tips: ['Foco en movilidad más que fuerza.', 'Usá soporte si es necesario.'] },
+      { name: 'Sentadilla profunda sostenida', reps: '3×45s', cue: 'Talones en el suelo, torso erguido', time: 140,
+        steps: ['Pies un poco más anchos que hombros.', 'Bajá hasta la posición más profunda.', 'Talones en el suelo, pecho arriba.', 'Sostené 30-45 seg respirando.'],
+        tips: ['Es una de las mejores posiciones.', 'Movete suave dentro del rango.'] },
+      { name: 'Dislocaciones con banda/palo', reps: '2×10', cue: 'Sin dolor, movilidad de hombro', time: 100,
+        steps: ['Sostené palo o banda con agarre amplio.', 'Brazos rectos, subí por delante.', 'Pasalo por encima de la cabeza.', 'Bajá por detrás sin doblar codos.'],
+        tips: ['Rango completo, sin dolor.', 'Achicá agarre con el tiempo.'] },
+    ],
+  },
+  c_cooldown: {
+    1: [
+      { name: 'Estiramiento de pecho', cue: 'En marco de puerta, 30s/lado', time: 60,
+        steps: ['Parate en el marco de una puerta.', 'Apoyá el antebrazo en el marco a 90°.', 'Inclinate suave hacia adelante.', 'Sostené 30 seg por lado.'],
+        tips: ['No fuerces, respirá.', 'Pecho afuera.'] },
+      { name: 'Estiramiento de isquios', cue: 'Sentado, alcanzá los pies', time: 60,
+        steps: ['Sentate con piernas extendidas al frente.', 'Inclinate desde la cadera, espalda recta.', 'Alcanzá los pies lo más lejos posible.', 'Sostené 30-45 seg.'],
+        tips: ['No rebotes.', 'Respirá profundo para relajar.'] },
+      { name: 'Respiración 4-4-4', cue: 'Inhalá 4, sostené 4, exhalá 4', time: 60,
+        steps: ['Sentate o acostate cómodo.', 'Inhalá por la nariz contando 4.', 'Sostené 4 segundos.', 'Exhalá por la boca contando 4.'],
+        tips: ['Si te marea, acortá los tiempos.', '10 ciclos suelen alcanzar.'] },
+    ],
+    2: [
+      { name: 'Estiramiento de pecho + dorsal', cue: 'Codo en pared, girate', time: 70,
+        steps: ['Apoyá el codo en una pared, brazo a 90°.', 'Girá el torso hacia el lado opuesto.', 'Sostené 30-40 seg.', 'Cambiá de lado.'],
+        tips: ['Sensación en pecho y dorsal.', 'No subas el hombro.'] },
+      { name: 'Paloma (cadera)', cue: '30-40s por lado, respirá', time: 80,
+        steps: ['Desde plancha, llevá una rodilla hacia adelante.', 'Apoyá la pantorrilla cruzada al frente.', 'Extendé la pierna trasera hacia atrás.', 'Bajá el torso y respirá.'],
+        tips: ['Si duele la rodilla, apoyate en almohada.', 'Sostené 30-40 seg por lado.'] },
+      { name: 'Respiración diafragmática', cue: 'Mano en panza, que suba', time: 60,
+        steps: ['Acostate boca arriba, mano en panza.', 'Inhalá por la nariz llenando la panza.', 'Exhalá lento dejando que baje.', 'Repetí 10-15 ciclos.'],
+        tips: ['Costillas también se expanden.', 'Ritmo lento y relajado.'] },
+    ],
+    3: [
+      { name: 'Estiramiento de hombro completo', cue: 'Sleeper stretch + dislocaciones', time: 80,
+        steps: ['Acostate de costado con brazo estirado.', 'Flexioná el codo a 90° hacia arriba.', 'Con la otra mano empujá el antebrazo al suelo.', 'Sostené 30 seg por lado.'],
+        tips: ['Sleeper stretch: relajá antes.', 'Sumá dislocaciones suaves.'] },
+      { name: 'Estiramiento de cadera profundo', cue: 'Pigeon + frog, 40s cada uno', time: 90,
+        steps: ['Pigeon: desde cuadrupedia, pierna al frente.', 'Frog: rodillas abiertas, talones juntos.', 'Sostené cada uno 40 seg.', 'Respirá lento en cada posición.'],
+        tips: ['Combiná ambas posiciones.', 'Sin dolor, buscá rango.'] },
+      { name: 'Respiración box 4-4-4-4', cue: 'Inhala-sostén-exhala-sostén', time: 60,
+        steps: ['Sentate cómodo, espalda recta.', 'Inhalá contando 4.', 'Sostené 4.', 'Exhalá 4 y sostené 4 antes de volver a inhalar.'],
+        tips: ['Ciclos completos: 5-10.', 'Muy útil para el sistema nervioso.'] },
+    ],
+  },
+  t_warmup: {
+    1: [
+      { name: 'Rotación de cuello', cue: 'Suave, 5 por lado, sin forzar', time: 60,
+        steps: ['Parate con pies al ancho de cadera.', 'Bajá la cabeza suave al pecho.', 'Girá la cabeza de un lado al otro en semicírculos.', '5 por lado, muy suave.'],
+        tips: ['No hagas círculos completos.', 'Respirá lento.'] },
+      { name: 'Círculos de hombros', cue: 'Grandes, lentos, coordiná respiración', time: 60,
+        steps: ['Brazos relajados a los costados.', 'Subí los hombros hacia las orejas.', 'Gíralos hacia atrás y abajo.', '10 por sentido.'],
+        tips: ['Movimiento grande y lento.', 'Coordinalo con la respiración.'] },
+      { name: 'Respiración 4-4-4', cue: 'Inhala 4, sostén 4, exhala 4', time: 60,
+        steps: ['Sentate o parate cómodo.', 'Inhalá 4 seg por la nariz.', 'Sostené 4.', 'Exhalá 4 por la boca.'],
+        tips: ['Relajá los hombros.', 'Que el aire llegue a la panza.'] },
+    ],
+    2: [
+      { name: 'Rotación de cadera y rodillas', cue: 'Círculos amplios, pies juntos', time: 80,
+        steps: ['Pies juntos, manos en rodillas.', 'Dibujá círculos con ambas rodillas.', '10 en un sentido, 10 en el otro.', 'Movimiento amplio y lento.'],
+        tips: ['Foco en calentar articulaciones.', 'Sin forzar.'] },
+      { name: 'Apertura de pecho y hombros', cue: 'Brazos en cruz, girando', time: 80,
+        steps: ['Brazos en cruz a los costados.', 'Girá el torso hacia un lado.', 'Mantené la cadera quieta.', '10 por lado.'],
+        tips: ['Relajá los hombros.', 'Respirá en cada giro.'] },
+      { name: 'Balanceo de brazos (swing)', cue: 'Relajá codos, mové desde cadera', time: 70,
+        steps: ['Parado, pies al ancho de hombros.', 'Balanceá los brazos de adelante hacia atrás.', 'Dejá que giren desde el hombro relajado.', '20 balanceos.'],
+        tips: ['Relajá los codos.', 'Sentí el chi fluir.'] },
+    ],
+    3: [
+      { name: 'Movilidad articular completa', cue: 'Tobillos, rodillas, cadera, hombros, cuello', time: 120,
+        steps: ['Comenzá por tobillos: círculos 10 por lado.', 'Seguí con rodillas, cadera, hombros.', 'Terminá con cuello suave.', 'Cada articulación 10 repeticiones.'],
+        tips: ['De abajo hacia arriba.', 'Sin prisa, sentí cada zona.'] },
+      { name: 'Chi Kung · Despertar', cue: 'Toques en cuerpo, activación energética', time: 90,
+        steps: ['De pie, pies al ancho de cadera.', 'Dá pequeños golpecitos con puños en las piernas.', 'Subí por torso, brazos y cabeza.', 'Terminá con palmaditas suaves.'],
+        tips: ['Presión suave y rítmica.', 'Sensación de despertar el cuerpo.'] },
+      { name: 'Respiración diafragmática', cue: 'Panza, costillas, pecho (en ese orden)', time: 80,
+        steps: ['De pie, manos en panza.', 'Inhalá por la nariz llenando la panza.', 'Después costillas, después pecho.', 'Exhalá en orden inverso.'],
+        tips: ['Que la panza suba primero.', 'Exhalación más larga que la inhalación.'] },
+    ],
+  },
+  t_breath: {
+    1: [
+      { name: 'Respiración abdominal', cue: 'Mano en panza, 5 seg inhalar / 5 exhalar', time: 180,
+        steps: ['Sentate o acostate cómodo.', 'Poné la mano en la panza.', 'Inhalá 5 seg por la nariz, la panza sube.', 'Exhalá 5 seg por la boca, la panza baja.'],
+        tips: ['No muevas el pecho.', 'Si te marea, acortá los tiempos.'] },
+      { name: 'Respiración 4-7-8', cue: 'Inhala 4, sostén 7, exhala 8', time: 180,
+        steps: ['Inhalá por la nariz contando 4.', 'Sostené 7 segundos.', 'Exhalá por la boca contando 8.', 'Repetí 4 ciclos.'],
+        tips: ['Relaja el sistema nervioso.', 'No lo hagas acostado si te da sueño.'] },
+      { name: 'Respiración alternada (Nadi Shodhana)', cue: 'Tapá una fosa, alterná', time: 150,
+        steps: ['Tapá la fosa derecha con el pulgar.', 'Inhalá por la izquierda.', 'Tapá la izquierda, exhalá por la derecha.', 'Alterná. 5 ciclos completos.'],
+        tips: ['Espalda recta.', 'Sin forzar los tiempos.'] },
+    ],
+    2: [
+      { name: 'Respiración abdominal profunda', cue: '6 seg inhala / 6 exhala', time: 200,
+        steps: ['Sentado, columna erguida.', 'Inhalá 6 seg por la nariz.', 'Exhalá 6 seg por la nariz.', '10 ciclos, foco en el Dantian.'],
+        tips: ['Atención 3 dedos bajo el ombligo.', 'Ritmo lento y estable.'] },
+      { name: 'Respiración 4-7-8 extendida', cue: 'Inhala 4, sostén 7, exhala 12', time: 200,
+        steps: ['Inhalá 4 por la nariz.', 'Sostené 7.', 'Exhalá 12 por la boca.', 'Repetí 6 ciclos.'],
+        tips: ['Exhalación larga = más relajación.', 'Sentado, no acostado.'] },
+      { name: 'Respiración alternada + visualización', cue: 'Imaginá luz entrando por fosas', time: 180,
+        steps: ['Tapá fosa derecha, inhalá por izquierda.', 'Visualizá luz dorada entrando.', 'Tapá izquierda, exhalá por derecha.', 'La luz sale limpiando el cuerpo.'],
+        tips: ['Visualización clara pero relajada.', '5-10 ciclos.'] },
+    ],
+    3: [
+      { name: 'Respiración abdominal larga', cue: '8 seg cada fase', time: 240,
+        steps: ['Sentado en postura estable.', 'Inhalá 8 seg por la nariz.', 'Exhalá 8 seg por la boca.', '10 ciclos lentos.'],
+        tips: ['Sin tensión en el abdomen.', 'Costillas se expanden hacia los lados.'] },
+      { name: 'Respiración circular', cue: 'Sin pausas entre inhalar y exhalar', time: 240,
+        steps: ['Sin pausas entre inhalar y exhalar.', 'Imaginá un círculo continuo.', 'Inhalá-exhalá sin cortes.', '10-15 ciclos.'],
+        tips: ['Movimiento fluido del diafragma.', 'Muy usado en tai chi avanzado.'] },
+      { name: 'Respiración con retención (Kumbhaka)', cue: 'Sostené 15-20 seg con comodidad', time: 200,
+        steps: ['Inhalá 5 seg por la nariz.', 'Sostené 15-20 seg cómodo.', 'Exhalá 8 seg por la boca.', '5 ciclos, sin forzar.'],
+        tips: ['Si te marea, pará.', 'Solo para practicantes avanzados.'] },
+    ],
+  },
+  t_zhanzhuang: {
+    1: [
+      { name: 'Wu Ji (postura del vacío)', cue: 'Pies al ancho, brazos sueltos, 2 min', time: 120,
+        steps: ['Pies al ancho de hombros, paralelos.', 'Brazos colgando relajados.', 'Rodillas ligeramente flexionadas.', 'Respirá natural 2 minutos.'],
+        tips: ['Peso repartido en todo el pie.', 'Soltá los hombros.'] },
+      { name: 'Abrazar el árbol', cue: 'Brazos redondos, como sosteniendo un globo', time: 150,
+        steps: ['Postura base de Wu Ji.', 'Elevá los brazos como abrazando un globo.', 'Codos ligeramente flexionados, palmas al centro.', 'Sostené respirando.'],
+        tips: ['Hombros abajo.', 'Imaginá que sostenés una pelota de energía.'] },
+      { name: 'Postura del árbol (Zhan Zhuang)', cue: 'Rodillas levemente flexionadas', time: 150,
+        steps: ['Pies al ancho, rodillas flexionadas 15-20°.', 'Peso repartido en el centro.', 'Respirá bajo, relajá hombros.', 'Foco en enraizar.'],
+        tips: ['No fuerces la flexión.', 'Sensación de raíz en los pies.'] },
+    ],
+    2: [
+      { name: 'Wu Ji extendido', cue: 'Sentí el peso, respirá', time: 150,
+        steps: ['Postura base, pies paralelos.', 'Solamente respirá y sentí el peso.', 'Escaneá el cuerpo buscando tensión.', 'Soltá cada zona tensa.'],
+        tips: ['Sin corregir nada, solo observar.', 'Respiración natural.'] },
+      { name: 'Abrazar el árbol + respiración', cue: 'Sincronizá inhalar/exhalar con brazos', time: 200,
+        steps: ['Postura de abrazo al árbol.', 'Inhalá abriendo ligeramente los brazos.', 'Exhalá cerrándolos.', 'Sincronizá 10 ciclos.'],
+        tips: ['Movimiento mínimo.', 'Respiración lenta y profunda.'] },
+      { name: 'Zhan Zhuang con foco en Dantian', cue: 'Atención 3 dedos bajo el ombligo', time: 200,
+        steps: ['Postura del árbol estable.', 'Llevá la atención 3 dedos bajo el ombligo.', 'Sentí el calor y el movimiento.', 'Sostené 3-4 min.'],
+        tips: ['No busques resultados.', 'Solo observá.'] },
+    ],
+    3: [
+      { name: 'Wu Ji profundo', cue: 'Disolución de tensión, 3 min', time: 200,
+        steps: ['Postura estática, pies paralelos.', 'Cerrá los ojos suavemente.', 'Disolvé tensión en cada exhalación.', '3 min mínimo.'],
+        tips: ['Sensación de vacío y expansión.', 'Respiración natural.'] },
+      { name: 'Zhan Zhuang con peso imaginario', cue: 'Sentí el chi circular', time: 240,
+        steps: ['Abrazo al árbol.', 'Imaginá sostener una pelota de energía entre manos.', 'Sentí la vibración.', '4 min o más.'],
+        tips: ['Sin esfuerzo físico.', 'Solo presencia.'] },
+      { name: 'Postura de una pierna (equilibrio)', cue: 'Foco en un punto fijo', time: 200,
+        steps: ['De pie sobre una pierna.', 'Otra pierna elevada, rodilla flexionada.', 'Foco en un punto fijo al frente.', '30 seg por lado.'],
+        tips: ['Respiración baja.', 'Si perdés equilibrio, empezá de nuevo.'] },
+    ],
+  },
+  t_form: {
+    1: [
+      { name: 'Forma de 8 · Bloque 1', cue: 'Abrir y cerrar, armonizar', time: 180,
+        steps: ['Parado, pies al ancho de hombros.', 'Abrí los brazos al frente, palmas hacia arriba.', 'Cerrá al pecho con las palmas abajo.', 'Repetí 8 veces con respiración.'],
+        tips: ['Movimiento lento y continuo.', 'Respiración coordina con brazos.'] },
+      { name: 'Forma de 8 · Bloque 2', cue: 'Nube manos: movimientos circulares', time: 180,
+        steps: ['Manos a la altura del pecho.', 'Hacé círculos con las palmas.', 'Movimiento desde la cintura.', 'Alterná dirección.'],
+        tips: ['Manos como nubes.', 'Pies bien enraizados.'] },
+      { name: 'Forma de 8 · Cierre', cue: 'Cerrar con recogida de energía', time: 150,
+        steps: ['Manos al Dantian.', 'Respirá 3 ciclos lentos.', 'Agradecé la práctica.', 'Soltá los brazos al costado.'],
+        tips: ['Cierre consciente.', 'Sensación de plenitud.'] },
+    ],
+    2: [
+      { name: 'Forma de 24 · Bloque 1', cue: 'Inicio, apertura y primeras 6 posturas', time: 240,
+        steps: ['Postura inicial: pies juntos, brazos al costado.', 'Abrí paso hacia el lado, brazos suben.', 'Postura de "abrazar el sol" y "acariciar la cola del pájaro".', '6 posturas iniciales con respiración.'],
+        tips: ['Cada postura respira una vez.', 'Movimiento continuo sin cortes.'] },
+      { name: 'Forma de 24 · Bloque 2', cue: 'Posturas 7 a 14, foco en grulla', time: 240,
+        steps: ['Posturas de grulla, aguja, abanico.', 'Mové desde la cadera, no brazos.', 'Respiración continua.', 'Posturas 7 a 14.'],
+        tips: ['Fluidez ante todo.', 'Ojos siguen las manos.'] },
+      { name: 'Forma de 24 · Cierre parcial', cue: 'Posturas 15 a 20, serenidad', time: 200,
+        steps: ['Posturas 15 a 20.', 'Foco en serenidad y equilibrio.', 'Cada transición fluida.', 'Terminá con manos al Dantian.'],
+        tips: ['Sin prisa.', 'Posturas como el "cierre aparente".'] },
+    ],
+    3: [
+      { name: 'Forma de 24 completa', cue: 'Fluidez sin cortes, respiración continua', time: 300,
+        steps: ['Realizá las 24 posturas en secuencia.', 'Sin cortes ni pausas rígidas.', 'Respiración continua.', 'Foco en raíz y fluidez.'],
+        tips: ['Forma clásica de Beijing.', 'Cada postura mínimo 4-5 respiraciones.'] },
+      { name: 'Forma 42 simplificada', cue: 'Más dinámica, mantené raíz', time: 280,
+        steps: ['Más dinámica que la 24.', 'Mantené raíz firme.', 'Movimientos circulares amplios.', 'Terminá con cierre de Dantian.'],
+        tips: ['Estilo combinado (Yang + Chen).', 'Respiración profunda y continua.'] },
+      { name: 'Empuje de manos (solo)', cue: 'Sensibilidad, relajación, no fuerza', time: 200,
+        steps: ['Postura de caballo estable.', 'Manos a la altura del pecho, palmas al frente.', 'Movimiento circular suave.', 'Sin fuerza, solo sensibilidad.'],
+        tips: ['Relajá todo el cuerpo.', 'Imaginá un oponente suave.'] },
+    ],
+  },
+  t_cooldown: {
+    1: [
+      { name: 'Recoger energía', cue: 'Manos al Dantian, respirá', time: 60,
+        steps: ['Manos frente al Dantian.', 'Respirá 3 ciclos lentos.', 'Sentí la energía concentrarse.', 'Soltá.'],
+        tips: ['Manos a 3 dedos bajo el ombligo.', 'Sensación de calor.'] },
+      { name: 'Masaje abdominal circular', cue: 'Sentido horario, 36 vueltas', time: 60,
+        steps: ['Palmas sobre el abdomen.', 'Movimientos circulares sentido horario.', '36 vueltas suaves.', 'Terminá apoyando las manos.'],
+        tips: ['Presión suave.', 'Tradición taoísta.'] },
+    ],
+    2: [
+      { name: 'Cierre de forma', cue: 'Manos al Dantian, 3 respiraciones', time: 80,
+        steps: ['Manos al Dantian.', '3 respiraciones largas.', 'Soltá los brazos al costado.', 'Agradecé.'],
+        tips: ['Cierre clásico de la forma.', 'Momento de integración.'] },
+      { name: 'Automassage de brazos y piernas', cue: 'De arriba hacia abajo', time: 80,
+        steps: ['Frotá brazos desde hombro a muñeca.', 'Bajá por piernas desde cadera a tobillo.', 'Presión suave y constante.', 'Terminá con palmaditas.'],
+        tips: ['Circulación y descarga.', 'Ritmo lento.'] },
+    ],
+    3: [
+      { name: 'Cierre con meditación breve', cue: 'Sentado o de pie, 2 min', time: 120,
+        steps: ['Sentate en postura cómoda.', 'Respirá profundo 2 minutos.', 'Dejá pasar los pensamientos.', 'Volvé lentamente.'],
+        tips: ['No te aferres a nada.', 'Observá la respiración.'] },
+      { name: 'Automassage completo', cue: 'Cuero cabelludo, cara, cuerpo', time: 100,
+        steps: ['Cuero cabelludo con dedos, 30 seg.', 'Cara, sienes, orejas.', 'Brazos, torso, piernas.', '2 min de masaje total.'],
+        tips: ['Presión media.', 'Respirá lento.'] },
+    ],
+  },
+};
+
+/* ============================================================
+   OBJETIVOS
+   ============================================================ */
+const OBJECTIVES = {
+  strength: {
+    label: 'Fuerza', emoji: '💪', discipline: 'Calistenia',
+    slots: [
+      { cat: 'c_warmup',   weight: 1,   label: '🔥 Calentamiento', sub: 'Activación' },
+      { cat: 'c_push',     weight: 2,   label: '⚡ Empuje',         sub: 'Pecho · hombro · tríceps' },
+      { cat: 'c_pull',     weight: 2,   label: '🪢 Tirón',          sub: 'Espalda · bíceps' },
+      { cat: 'c_legs',     weight: 1.5, label: '🦵 Piernas',        sub: 'Sentadilla y cadena posterior' },
+      { cat: 'c_core',     weight: 1.5, label: '🎯 Core',           sub: 'Estabilidad' },
+      { cat: 'c_cooldown', weight: 1,   label: '🌙 Cierre',         sub: 'Estiramiento y respiración' },
+    ],
+  },
+  mobility: {
+    label: 'Movilidad', emoji: '🌊', discipline: 'Tai Chi + Movilidad',
+    slots: [
+      { cat: 't_warmup',   weight: 1, label: '🔥 Calentamiento', sub: 'Articulaciones' },
+      { cat: 'c_mobility', weight: 2, label: '🌊 Movilidad',     sub: 'Rango y flexibilidad' },
+      { cat: 't_form',     weight: 3, label: '☯ Tai Chi',        sub: 'Forma y fluidez' },
+      { cat: 't_cooldown', weight: 1, label: '🌙 Cierre',        sub: 'Recogida de energía' },
+    ],
+  },
+  calm: {
+    label: 'Calma', emoji: '🧘', discipline: 'Tai Chi · Chi Kung',
+    slots: [
+      { cat: 't_warmup',     weight: 1, label: '🔥 Enraizarse',   sub: 'Preparar cuerpo y mente' },
+      { cat: 't_breath',     weight: 2, label: '🫁 Respiración',  sub: 'Prāṇāyāma / Chi Kung' },
+      { cat: 't_zhanzhuang', weight: 2, label: '🌳 Posturas',     sub: 'Zhan Zhuang · enraizar' },
+      { cat: 't_form',       weight: 2, label: '☯ Tai Chi',       sub: 'Forma en movimiento' },
+      { cat: 't_cooldown',   weight: 1, label: '🌙 Cierre',       sub: 'Integración' },
+    ],
+  },
+  skill: {
+    label: 'Skills', emoji: '🎯', discipline: 'Calistenia · Habilidad',
+    slots: [
+      { cat: 'c_warmup',   weight: 1,   label: '🔥 Calentamiento',    sub: 'Preparación articular' },
+      { cat: 'c_skill',    weight: 3,   label: '🎯 Skills',            sub: 'Pino · lever · planche' },
+      { cat: 'c_push',     weight: 1.5, label: '💪 Soporte · Empuje',  sub: 'Fuerza complementaria' },
+      { cat: 'c_pull',     weight: 1.5, label: '🪢 Soporte · Tirón',   sub: 'Fuerza complementaria' },
+      { cat: 'c_cooldown', weight: 1,   label: '🌙 Cierre',            sub: 'Recuperación' },
+    ],
+  },
+  hybrid: {
+    label: 'Yin-Yang', emoji: '☯', discipline: 'Calistenia + Tai Chi',
+    slots: [
+      { cat: 'c_warmup',   weight: 1,   label: '🔥 Calentamiento',       sub: 'Despertar el cuerpo' },
+      { cat: 'c_push',     weight: 1.5, label: '⚡ Empuje (Yang)',        sub: 'Fuerza calisténica' },
+      { cat: 'c_pull',     weight: 1.5, label: '🪢 Tirón (Yang)',         sub: 'Fuerza calisténica' },
+      { cat: 'c_core',     weight: 1,   label: '🎯 Core',                sub: 'Conexión centro' },
+      { cat: 't_form',     weight: 2,   label: '☯ Tai Chi (Yin)',        sub: 'Fluidez y respiración' },
+      { cat: 't_breath',   weight: 1,   label: '🫁 Cierre respiratorio', sub: 'Integración' },
+      { cat: 't_cooldown', weight: 0.5, label: '🌙 Cierre final',        sub: 'Vuelta a la calma' },
+    ],
+  },
+};
+
+/* ============================================================
+   LÓGICA DE GENERACIÓN
+   ============================================================ */
+function getPool(category, level) {
+  const cat = POOL[category];
+  if (!cat) return [];
+  const levels = level === 1 ? [1] : level === 2 ? [1, 2] : [2, 3];
+  const all = levels.flatMap(l => cat[l] || []);
+  const seen = new Set();
+  return all.filter(ex => {
+    if (seen.has(ex.name)) return false;
+    seen.add(ex.name);
+    return true;
+  });
+}
+function shuffle(a) {
+  const arr = [...a];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function pickForTime(pool, targetTime) {
+  if (!pool.length) return [];
+  const shuffled = shuffle(pool);
+  const chosen = [];
+  let total = 0;
+  const cap = Math.max(targetTime * 1.15, 90);
+  const maxCount = targetTime < 120 ? 2 : targetTime < 220 ? 3 : 4;
+  for (const ex of shuffled) {
+    if (chosen.length >= maxCount) break;
+    if (chosen.length === 0 || total + ex.time <= cap) {
+      chosen.push(ex);
+      total += ex.time;
+    }
+    if (total >= targetTime * 0.85) break;
+  }
+  if (!chosen.length) chosen.push(shuffled[0]);
+  return chosen;
+}
+function generate(objectiveKey, level, minutes) {
+  const obj = OBJECTIVES[objectiveKey];
+  const totalSec = minutes * 60;
+  const totalWeight = obj.slots.reduce((s, x) => s + x.weight, 0);
+  const blocks = obj.slots.map(slot => {
+    const slotTime = Math.round(totalSec * slot.weight / totalWeight);
+    const pool = getPool(slot.cat, level);
+    const exercises = pickForTime(pool, slotTime);
+    const realTime = exercises.reduce((s, e) => s + e.time, 0);
+    return { label: slot.label, sub: slot.sub, exercises, time: realTime };
+  });
+  const levelLabel = { 1: 'Semilla', 2: 'Raíz', 3: 'Tronco' }[level];
+  return {
+    objective: objectiveKey,
+    level, levelLabel, minutes, blocks,
+    title: `Rutina de ${obj.label}`,
+    discipline: obj.discipline,
+    emoji: obj.emoji,
+  };
+}
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+const STORAGE_KEY = 'fs_progress_v1';
+const REMINDER_KEY = 'fs_reminder_v1';
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { sessions: [] };
+    const p = JSON.parse(raw);
+    if (!Array.isArray(p.sessions)) p.sessions = [];
+    return p;
+  } catch { return { sessions: [] }; }
+}
+function saveProgress(p) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch {}
+}
+function recordSession(objective, level, minutes) {
+  const p = loadProgress();
+  p.sessions.push({ objective, level, minutes, date: Date.now() });
+  if (p.sessions.length > 200) p.sessions = p.sessions.slice(-200);
+  saveProgress(p);
+}
+function getStreak(objective, level) {
+  const p = loadProgress();
+  let count = 0;
+  for (let i = p.sessions.length - 1; i >= 0; i--) {
+    const s = p.sessions[i];
+    if (s.objective === objective && s.level === level) count++;
+    else break;
+  }
+  return count;
+}
+function findLevelUpSuggestion() {
+  const p = loadProgress();
+  if (p.sessions.length === 0) return null;
+  const last = p.sessions[p.sessions.length - 1];
+  if (last.level >= 3) return null;
+  const streak = getStreak(last.objective, last.level);
+  if (streak < 3) return null;
+  const obj = OBJECTIVES[last.objective];
+  return {
+    objective: last.objective,
+    label: obj.label, emoji: obj.emoji,
+    currentLevel: last.level,
+    nextLevel: last.level + 1,
+    streak,
+  };
+}
+function renderLevelUpBanner() {
+  const suggestion = findLevelUpSuggestion();
+  const banner = document.getElementById('levelUpBanner');
+  if (!suggestion) { banner.innerHTML = ''; return; }
+  const levelLabel = { 1: 'Semilla', 2: 'Raíz', 3: 'Tronco' }[suggestion.nextLevel];
+  banner.innerHTML = `
+    <div class="levelup">
+      <div class="levelup-body">
+        <strong>🎉 ¡${suggestion.streak} sesiones seguidas de ${suggestion.label}!</strong><br/>
+        <span>¿Listo para subir a nivel ${levelLabel}?</span>
+      </div>
+      <button class="levelup-btn" id="acceptLevelUp">Subir</button>
+      <button class="levelup-dismiss" id="dismissLevelUp">×</button>
+    </div>
+  `;
+  document.getElementById('acceptLevelUp').addEventListener('click', () => {
+    state.level = suggestion.nextLevel;
+    applyActivePill('groupLevel', String(suggestion.nextLevel));
+    generateBtn.disabled = !(state.objective && state.level && state.time);
+    banner.innerHTML = '';
+    showToast(`⬆️ Nivel ${levelLabel} seleccionado. ¡A darle!`);
+  });
+  document.getElementById('dismissLevelUp').addEventListener('click', () => {
+    banner.innerHTML = '';
+  });
+}
+function applyActivePill(groupId, value) {
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.pill').forEach(b => {
+    b.classList.toggle('active', b.dataset.value === value);
+  });
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimeout = null;
+function showToast(msg, ms = 2600) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.remove('hidden');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.add('hidden'), ms);
+}
+
+/* ============================================================
+   UI · ESTADO
+   ============================================================ */
+const state = { objective: null, level: null, time: null };
+let currentRoutine = null;
+let exerciseStates = {};
+
+const selectScreen  = document.getElementById('selectScreen');
+const routineScreen = document.getElementById('routineScreen');
+const generateBtn   = document.getElementById('generateBtn');
+const finishBtn     = document.getElementById('finishBtn');
+
+function bindGroup(groupId, key) {
+  const group = document.getElementById(groupId);
+  group.addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn) return;
+    group.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state[key] = (key === 'level' || key === 'time')
+      ? Number(btn.dataset.value)
+      : btn.dataset.value;
+    generateBtn.disabled = !(state.objective && state.level && state.time);
+  });
+}
+bindGroup('groupObjective', 'objective');
+bindGroup('groupLevel', 'level');
+bindGroup('groupTime', 'time');
+
+function fmt(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+function buildVideoUrl(name, isTaiChi) {
+  const q = encodeURIComponent(name + (isTaiChi ? ' tai chi tutorial' : ' calistenia tutorial'));
+  return `https://www.youtube.com/results?search_query=${q}`;
+}
+
+/* ============================================================
+   RENDER RUTINA
+   ============================================================ */
+function renderRoutine(routine) {
+  currentRoutine = routine;
+  exerciseStates = {};
+
+  document.getElementById('routineTitle').textContent = routine.title;
+  document.getElementById('routineMeta').innerHTML = `
+    <span class="tag bamboo">${routine.emoji} ${routine.discipline}</span>
+    <span class="tag gold">Nivel ${routine.levelLabel}</span>
+    <span class="tag sun">⏱ ${routine.minutes} min</span>
+  `;
+
+  const container = document.getElementById('blocksContainer');
+  container.innerHTML = '';
+
+  routine.blocks.forEach((block, bi) => {
+    const isTaiChi = /tai chi|respiración|postura|cierre|enraiz|recogida/i.test(block.label);
+
+    const blockEl = document.createElement('div');
+    blockEl.className = 'block';
+    const totalMin = Math.max(1, Math.round(block.time / 60));
+    blockEl.innerHTML = `
+      <div class="block-head">
+        <h3>${block.label}</h3>
+        <span>${block.sub} · ~${totalMin} min</span>
+      </div>
+    `;
+
+    block.exercises.forEach((ex, ei) => {
+      const id = `b${bi}-e${ei}`;
+      exerciseStates[id] = false;
+
+      const exEl = document.createElement('div');
+      exEl.className = 'ex';
+      exEl.dataset.exId = id;
+
+      const stepsHtml = (ex.steps || []).map(s => `<li>${s}</li>`).join('');
+      const tipsHtml = (ex.tips && ex.tips.length)
+        ? `<div class="tips"><strong>💡 Tips</strong><ul>${ex.tips.map(t => `<li>${t}</li>`).join('')}</ul></div>`
+        : '';
+
+      exEl.innerHTML = `
+        <div class="check">✓</div>
+        <div class="ex-body">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-cue">${ex.cue}</div>
+          <div class="action-row">
+            <button class="howto-toggle" type="button">📖 Cómo se hace</button>
+            <button class="zen-toggle" type="button">▶ Zen</button>
+          </div>
+          <div class="howto hidden">
+            <h4>Paso a paso</h4>
+            <ol>${stepsHtml}</ol>
+            ${tipsHtml}
+            <a class="video-link" target="_blank" rel="noopener"
+               href="${buildVideoUrl(ex.name, isTaiChi)}">🎥 Ver video en YouTube</a>
+          </div>
+        </div>
+        <div class="ex-side">
+          ${ex.reps ? `<div class="ex-reps">${ex.reps}</div>` : ''}
+          <div class="ex-time">${fmt(ex.time)}</div>
+        </div>
+      `;
+
+      const checkEl   = exEl.querySelector('.check');
+      const bodyEl    = exEl.querySelector('.ex-body');
+      const toggleBtn = exEl.querySelector('.howto-toggle');
+      const howtoEl   = exEl.querySelector('.howto');
+      const zenBtn    = exEl.querySelector('.zen-toggle');
+
+      function toggleDone() {
+        exerciseStates[id] = !exerciseStates[id];
+        exEl.classList.toggle('done', exerciseStates[id]);
+      }
+      checkEl.addEventListener('click', toggleDone);
+      bodyEl.addEventListener('click', e => {
+        if (e.target.closest('.howto-toggle') || e.target.closest('.howto') ||
+            e.target.closest('.video-link') || e.target.closest('.zen-toggle')) return;
+        toggleDone();
+      });
+      toggleBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const open = !howtoEl.classList.contains('hidden');
+        howtoEl.classList.toggle('hidden', open);
+        toggleBtn.textContent = open ? '📖 Cómo se hace' : '▲ Cerrar';
+      });
+      zenBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        startZen(id);
+      });
+
+      blockEl.appendChild(exEl);
+    });
+
+    container.appendChild(blockEl);
+  });
+
+  finishBtn.disabled = false;
+  finishBtn.classList.remove('saved');
+  finishBtn.textContent = '✅ Terminar sesión';
+}
+
+/* ============================================================
+   ZEN MODE
+   ============================================================ */
+let zenQueue = [];
+let zenIndex = 0;
+let zenTimeLeft = 0;
+let zenRunning = false;
+let zenTickInterval = null;
+let zenBreathInterval = null;
+let zenBreathPhase = 0;
+const BREATH_LABELS = ['Inhalá', 'Sostené', 'Exhalá', 'Sostené'];
+const zenScreen = document.getElementById('zenScreen');
+
+function buildZenQueue(routine) {
+  const q = [];
+  routine.blocks.forEach((block, bi) => {
+    block.exercises.forEach((ex, ei) => {
+      q.push({ id: `b${bi}-e${ei}`, exercise: ex, blockLabel: block.label });
+    });
+  });
+  return q;
+}
+function startZen(startId) {
+  if (!currentRoutine) return;
+  zenQueue = buildZenQueue(currentRoutine);
+  zenIndex = zenQueue.findIndex(x => x.id === startId);
+  if (zenIndex < 0) zenIndex = 0;
+  zenScreen.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  loadZenExercise();
+}
+function loadZenExercise() {
+  const item = zenQueue[zenIndex];
+  if (!item) { exitZen(); return; }
+  zenTimeLeft = item.exercise.time;
+  zenBreathPhase = 0;
+  zenRunning = false;
+
+  document.getElementById('zenProgress').textContent = `${zenIndex + 1} / ${zenQueue.length}`;
+  document.getElementById('zenBlock').textContent = item.blockLabel;
+  document.getElementById('zenName').textContent = item.exercise.name;
+  document.getElementById('zenCue').textContent = item.exercise.cue;
+  document.getElementById('zenReps').textContent = item.exercise.reps || '';
+  document.getElementById('zenPhase').textContent = BREATH_LABELS[0];
+
+  updateZenTimer();
+  zenScreen.classList.add('paused');
+  document.getElementById('zenPlay').textContent = '▶';
+}
+function updateZenTimer() {
+  const m = Math.floor(zenTimeLeft / 60);
+  const s = zenTimeLeft % 60;
+  document.getElementById('zenTimer').textContent =
+    `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+function toggleZen() { zenRunning ? pauseZen() : playZen(); }
+function playZen() {
+  if (zenRunning) return;
+  zenRunning = true;
+  zenScreen.classList.remove('paused');
+  document.getElementById('zenPlay').textContent = '⏸';
+
+  zenTickInterval = setInterval(() => {
+    zenTimeLeft--;
+    if (zenTimeLeft <= 0) {
+      zenTimeLeft = 0;
+      updateZenTimer();
+      const id = zenQueue[zenIndex].id;
+      exerciseStates[id] = true;
+      const card = document.querySelector(`[data-ex-id="${id}"]`);
+      if (card) card.classList.add('done');
+      pauseZen();
+      setTimeout(() => {
+        if (zenIndex < zenQueue.length - 1) {
+          zenIndex++;
+          loadZenExercise();
+        } else {
+          exitZen();
+          showToast('🎉 ¡Rutina completada! No olvides guardar la sesión.');
+        }
+      }, 1000);
+      return;
+    }
+    updateZenTimer();
+  }, 1000);
+
+  zenBreathInterval = setInterval(() => {
+    zenBreathPhase = (zenBreathPhase + 1) % 4;
+    document.getElementById('zenPhase').textContent = BREATH_LABELS[zenBreathPhase];
+  }, 4000);
+}
+function pauseZen() {
+  zenRunning = false;
+  zenScreen.classList.add('paused');
+  document.getElementById('zenPlay').textContent = '▶';
+  clearInterval(zenTickInterval);
+  clearInterval(zenBreathInterval);
+}
+function exitZen() {
+  pauseZen();
+  zenScreen.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function nextZen() {
+  pauseZen();
+  if (zenIndex < zenQueue.length - 1) { zenIndex++; loadZenExercise(); }
+  else { exitZen(); showToast('🎉 ¡Rutina completada!'); }
+}
+function prevZen() {
+  pauseZen();
+  if (zenIndex > 0) { zenIndex--; loadZenExercise(); }
+}
+
+document.getElementById('zenPlay').addEventListener('click', toggleZen);
+document.getElementById('zenNext').addEventListener('click', nextZen);
+document.getElementById('zenPrev').addEventListener('click', prevZen);
+document.getElementById('zenExit').addEventListener('click', exitZen);
+document.addEventListener('keydown', e => {
+  if (zenScreen.classList.contains('hidden')) return;
+  if (e.code === 'Space') { e.preventDefault(); toggleZen(); }
+  if (e.code === 'ArrowRight') nextZen();
+  if (e.code === 'ArrowLeft') prevZen();
+  if (e.code === 'Escape') exitZen();
+});
+
+/* ============================================================
+   NAVEGACIÓN
+   ============================================================ */
+generateBtn.addEventListener('click', () => {
+  const routine = generate(state.objective, state.level, state.time);
+  renderRoutine(routine);
+  resetTimer();
+  selectScreen.classList.add('hidden');
+  routineScreen.classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+document.getElementById('backBtn').addEventListener('click', () => {
+  routineScreen.classList.add('hidden');
+  selectScreen.classList.remove('hidden');
+  stopTimer();
+  exitZen();
+  renderLevelUpBanner();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ============================================================
+   FINISH SESSION
+   ============================================================ */
+finishBtn.addEventListener('click', () => {
+  if (!currentRoutine) return;
+  if (finishBtn.classList.contains('saved')) return;
+
+  const { objective, level, minutes } = currentRoutine;
+  recordSession(objective, level, minutes);
+  const streak = getStreak(objective, level);
+
+  finishBtn.classList.add('saved');
+  finishBtn.textContent = `✅ Sesión guardada · Racha: ${streak}`;
+
+  let msg = `✅ Sesión de ${currentRoutine.title} guardada. Racha: ${streak}`;
+  if (streak === 3 && level < 3) msg = `🎉 ¡3 sesiones seguidas! Ya podés subir de nivel.`;
+  else if (streak > 3 && level < 3) msg = `🔥 Racha de ${streak}. ¡Subí de nivel cuando quieras!`;
+  showToast(msg, 3200);
+});
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+const timerDisplay = document.getElementById('timerDisplay');
+const timerToggle  = document.getElementById('timerToggle');
+const timerReset   = document.getElementById('timerReset');
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  timerDisplay.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  timerToggle.textContent = '⏸';
+  timerInterval = setInterval(() => { timerSeconds++; updateTimerDisplay(); }, 1000);
+}
+function stopTimer() {
+  timerRunning = false;
+  timerToggle.textContent = '▶';
+  clearInterval(timerInterval);
+}
+function resetTimer() { stopTimer(); timerSeconds = 0; updateTimerDisplay(); }
+timerToggle.addEventListener('click', () => timerRunning ? stopTimer() : startTimer());
+timerReset.addEventListener('click', resetTimer);
+updateTimerDisplay();
+
+/* ============================================================
+   PWA · INSTALL + SERVICE WORKER
+   ============================================================ */
+const installBtn = document.getElementById('installBtn');
+let deferredPrompt = null;
+let swRegistration = null;
+
+const isStandalone =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.navigator.standalone === true;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!isStandalone) installBtn.classList.remove('hidden');
+});
+
+installBtn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installBtn.classList.add('hidden');
+    showToast(outcome === 'accepted'
+      ? '🎉 ¡FlowForce instalada!'
+      : '👌 Podés instalarla después desde el menú del navegador');
+    return;
+  }
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if (isIOS) {
+    showToast('Para instalar: tocá Compartir ↑ → "Añadir a pantalla de inicio"', 6000);
+  } else {
+    showToast('Buscá "Instalar app" en el menú del navegador', 5000);
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  installBtn.classList.add('hidden');
+  showToast('🎉 ¡FlowForce instalada en tu dispositivo!');
+});
+
+(function handleIOS() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if (!isIOS || isStandalone) return;
+  if (!deferredPrompt) installBtn.classList.remove('hidden');
+
+  if (!sessionStorage.getItem('ios_hint_shown')) {
+    const hint = document.createElement('div');
+    hint.className = 'ios-hint';
+    hint.innerHTML = `
+      <span style="font-size:20px">📲</span>
+      <div>
+        <strong>Instalá FlowForce</strong><br/>
+        Tocá <strong>Compartir</strong> y luego <strong>"Añadir a pantalla de inicio"</strong>.
+      </div>
+      <button class="close-ios" aria-label="Cerrar">×</button>
+    `;
+    selectScreen.insertBefore(hint, selectScreen.querySelector('.step'));
+    hint.querySelector('.close-ios').addEventListener('click', () => {
+      hint.remove();
+      sessionStorage.setItem('ios_hint_shown', '1');
+    });
+  }
+})();
+
+if (isStandalone) installBtn.classList.add('hidden');
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => {
+        swRegistration = reg;
+        console.log('✅ SW registrado:', reg.scope);
+      })
+      .catch(err => console.warn('⚠️ SW error:', err));
+  });
+
+  navigator.serviceWorker.ready.then(reg => {
+    swRegistration = reg;
+    const cfg = loadReminderSettings();
+    if (cfg.enabled && typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+      reg.active?.postMessage({
+        type: 'SCHEDULE_REMINDER',
+        hour: cfg.hour,
+        minute: cfg.minute,
+      });
+    }
+  });
+
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data?.type === 'NOTIFICATION_CLICKED') {
+      console.log('[App] Notificación clickeada:', event.data.action);
+    }
+    if (event.data?.type === 'GET_REMINDER_TIME') {
+      const cfg = loadReminderSettings();
+      if (cfg.enabled && swRegistration?.active) {
+        swRegistration.active.postMessage({
+          type: 'SCHEDULE_REMINDER',
+          hour: cfg.hour,
+          minute: cfg.minute,
+        });
+      }
+    }
+  });
+}
+
+/* ============================================================
+   AJUSTES · RECORDATORIOS
+   ============================================================ */
+const settingsBtn   = document.getElementById('settingsBtn');
+const settingsPanel = document.getElementById('settingsPanel');
+const notifSwitch   = document.getElementById('notifSwitch');
+const notifTime     = document.getElementById('notifTime');
+const notifStatus   = document.getElementById('notifStatus');
+const testNotifBtn  = document.getElementById('testNotifBtn');
+const saveNotifBtn  = document.getElementById('saveNotifBtn');
+
+function loadReminderSettings() {
+  try {
+    const raw = localStorage.getItem(REMINDER_KEY);
+    if (!raw) return { enabled: false, hour: 7, minute: 0 };
+    return JSON.parse(raw);
+  } catch {
+    return { enabled: false, hour: 7, minute: 0 };
+  }
+}
+function saveReminderSettings(cfg) {
+  localStorage.setItem(REMINDER_KEY, JSON.stringify(cfg));
+}
+
+settingsBtn.addEventListener('click', () => {
+  const hidden = settingsPanel.classList.toggle('hidden');
+  if (hidden) {
+    settingsBtn.style.color = '';
+    settingsBtn.style.borderColor = '';
+  } else {
+    settingsBtn.style.color = 'var(--sun)';
+    settingsBtn.style.borderColor = 'var(--sun)';
+  }
+});
+
+function updateNotifUI() {
+  const cfg = loadReminderSettings();
+  notifSwitch.classList.toggle('on', cfg.enabled);
+  notifSwitch.setAttribute('aria-checked', String(cfg.enabled));
+  notifTime.value = `${String(cfg.hour).padStart(2, '0')}:${String(cfg.minute).padStart(2, '0')}`;
+
+  if (!('Notification' in window)) {
+    notifStatus.textContent = '⚠️ Tu navegador no soporta notificaciones';
+    notifStatus.className = 'notif-status err';
+    notifSwitch.style.opacity = '0.4';
+    notifSwitch.style.pointerEvents = 'none';
+    return;
+  }
+  const perm = Notification.permission;
+  if (perm === 'denied') {
+    notifStatus.textContent = '🚫 Notificaciones bloqueadas · activalas en ajustes del navegador';
+    notifStatus.className = 'notif-status err';
+  } else if (cfg.enabled && perm === 'granted') {
+    notifStatus.textContent = `✅ Activo · todos los días a las ${String(cfg.hour).padStart(2,'0')}:${String(cfg.minute).padStart(2,'0')}`;
+    notifStatus.className = 'notif-status ok';
+  } else if (cfg.enabled && perm === 'default') {
+    notifStatus.textContent = '⏳ Falta autorizar las notificaciones';
+    notifStatus.className = 'notif-status';
+  } else {
+    notifStatus.textContent = '🔕 Recordatorio desactivado';
+    notifStatus.className = 'notif-status';
+  }
+}
+
+async function requestNotifPermission() {
+  if (!('Notification' in window)) return 'unsupported';
+  if (Notification.permission === 'granted') return 'granted';
+  if (Notification.permission === 'denied') return 'denied';
+  return await Notification.requestPermission();
+}
+
+async function scheduleInSW(cfg) {
+  if (!swRegistration || !swRegistration.active) return false;
+  swRegistration.active.postMessage({
+    type: 'SCHEDULE_REMINDER',
+    hour: cfg.hour,
+    minute: cfg.minute,
+  });
+  return true;
+}
+async function cancelInSW() {
+  if (!swRegistration || !swRegistration.active) return;
+  swRegistration.active.postMessage({ type: 'CANCEL_REMINDER' });
+}
+
+notifSwitch.addEventListener('click', async () => {
+  const cfg = loadReminderSettings();
+  const willEnable = !cfg.enabled;
+
+  if (willEnable) {
+    const perm = await requestNotifPermission();
+    if (perm !== 'granted') {
+      updateNotifUI();
+      showToast(perm === 'denied'
+        ? '🚫 Notificaciones bloqueadas. Activalas en los ajustes del navegador.'
+        : '⏳ Autorización pendiente.');
+      return;
+    }
+    const [h, m] = notifTime.value.split(':').map(Number);
+    const newCfg = { enabled: true, hour: h, minute: m };
+    saveReminderSettings(newCfg);
+    await scheduleInSW(newCfg);
+    showToast(`🔔 Recordatorio activado para las ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+  } else {
+    const newCfg = { ...cfg, enabled: false };
+    saveReminderSettings(newCfg);
+    await cancelInSW();
+    showToast('🔕 Recordatorio desactivado');
+  }
+  updateNotifUI();
+});
+
+notifTime.addEventListener('change', async () => {
+  const cfg = loadReminderSettings();
+  const [h, m] = notifTime.value.split(':').map(Number);
+  const newCfg = { ...cfg, hour: h, minute: m };
+  saveReminderSettings(newCfg);
+  if (newCfg.enabled) {
+    await scheduleInSW(newCfg);
+    showToast(`🕐 Nueva hora: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+  }
+  updateNotifUI();
+});
+
+saveNotifBtn.addEventListener('click', async () => {
+  const cfg = loadReminderSettings();
+  const [h, m] = notifTime.value.split(':').map(Number);
+  const newCfg = { ...cfg, hour: h, minute: m };
+  saveReminderSettings(newCfg);
+  if (newCfg.enabled) {
+    const ok = await scheduleInSW(newCfg);
+    if (!ok) { showToast('⚠️ Service Worker no está listo'); return; }
+  }
+  showToast('✅ Ajustes guardados');
+  updateNotifUI();
+});
+
+testNotifBtn.addEventListener('click', async () => {
+  const perm = await requestNotifPermission();
+  if (perm !== 'granted') {
+    showToast('🚫 Necesitás autorizar las notificaciones primero');
+    return;
+  }
+  if (!swRegistration || !swRegistration.active) {
+    showToast('⚠️ Service Worker no está listo todavía');
+    return;
+  }
+  swRegistration.active.postMessage({ type: 'TEST_NOTIFICATION' });
+  showToast('🔔 Notificación de prueba enviada');
+});
+
+updateNotifUI();
+
+/* ============================================================
+   SHORTCUTS · ?action=quick|zen|repeat
+   ============================================================ */
+function handleShortcutAction() {
+  const params = new URLSearchParams(window.location.search);
+  const action = params.get('action');
+  if (!action) return;
+
+  window.history.replaceState({}, '', window.location.pathname);
+
+  setTimeout(() => {
+    if (action === 'quick') {
+      state.objective = 'hybrid';
+      state.level = 2;
+      state.time = 10;
+      applyActivePill('groupObjective', 'hybrid');
+      applyActivePill('groupLevel', '2');
+      applyActivePill('groupTime', '10');
+      generateBtn.disabled = false;
+      generateBtn.click();
+      showToast('⚡ Rutina rápida cargada');
+      return;
+    }
+
+    if (action === 'zen') {
+      state.objective = 'calm';
+      state.level = 1;
+      state.time = 10;
+      applyActivePill('groupObjective', 'calm');
+      applyActivePill('groupLevel', '1');
+      applyActivePill('groupTime', '10');
+      generateBtn.disabled = false;
+      generateBtn.click();
+      setTimeout(() => {
+        if (currentRoutine) startZen('b0-e0');
+      }, 400);
+      showToast('☯ Modo Zen');
+      return;
+    }
+
+    if (action === 'repeat') {
+      const p = loadProgress();
+      if (!p.sessions.length) {
+        showToast('📭 Todavía no tenés sesiones guardadas');
+        return;
+      }
+      const last = p.sessions[p.sessions.length - 1];
+      state.objective = last.objective;
+      state.level = last.level;
+      state.time = last.minutes;
+      applyActivePill('groupObjective', last.objective);
+      applyActivePill('groupLevel', String(last.level));
+      applyActivePill('groupTime', String(last.minutes));
+      generateBtn.disabled = false;
+      generateBtn.click();
+      showToast('🔁 Repitiendo última rutina');
+    }
+  }, 250);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderLevelUpBanner();
+handleShortcutAction();
+</script>
+</body>
+</html>
