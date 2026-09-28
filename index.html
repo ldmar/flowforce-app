@@ -620,6 +620,155 @@
     .install-btn .btn-text { display: none; }
     .settings-panel { padding: 14px; }
   }
+
+
+  /* ============ PROGRESO ============ */
+  .progress-link {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 14px;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all .15s ease;
+  }
+  .progress-link:hover { border-color: var(--bamboo-dim); color: var(--bamboo); }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .metric-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 16px;
+    border-radius: 14px;
+    transition: border-color .15s ease;
+  }
+  .metric-card:hover { border-color: var(--bamboo-dim); }
+  .metric-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+  .metric-value.bamboo { color: var(--bamboo); }
+  .metric-value.small { font-size: 18px; }
+  .metric-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    color: var(--muted);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* Calendario */
+  .calendar-wrap {
+    overflow-x: auto;
+    padding: 4px 0 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .calendar-wrap::-webkit-scrollbar { height: 6px; }
+  .calendar-wrap::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+  .calendar {
+    display: flex;
+    gap: 3px;
+    min-width: min-content;
+    padding: 4px 2px;
+  }
+  .calendar-week {
+    display: grid;
+    grid-template-rows: repeat(7, 12px);
+    gap: 3px;
+  }
+  .cal-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    transition: transform .12s ease;
+  }
+  .cal-cell[title]:hover { transform: scale(1.3); }
+  .cal-cell.l1 { background: rgba(127,176,105,.25); border-color: rgba(127,176,105,.35); }
+  .cal-cell.l2 { background: rgba(127,176,105,.5);  border-color: rgba(127,176,105,.6); }
+  .cal-cell.l3 { background: rgba(127,176,105,.75); border-color: var(--bamboo); }
+  .cal-cell.l4 { background: var(--bamboo); border-color: var(--bamboo); box-shadow: 0 0 8px rgba(127,176,105,.5); }
+  .cal-cell.empty { visibility: hidden; }
+  .cal-cell.today { outline: 1.5px solid var(--gold); outline-offset: 1px; }
+
+  .calendar-legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .calendar-legend span { margin: 0 4px; }
+  .calendar-legend .cal-cell { width: 10px; height: 10px; cursor: default; }
+  .calendar-legend .cal-cell[title]:hover { transform: none; }
+
+  /* Detalles */
+  .details-list {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row .label { color: var(--text); }
+  .detail-row .value {
+    color: var(--gold);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .reset-btn {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(255,120,120,.3);
+    color: #ff7878;
+    padding: 14px;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 32px;
+    transition: all .15s ease;
+  }
+  .reset-btn:hover { background: rgba(255,120,120,.1); border-color: #ff7878; }
+
+  @media (max-width: 400px) {
+    .metric-value { font-size: 22px; }
+    .metric-value.small { font-size: 16px; }
+  }
+
 </style>
 </head>
 <body>
@@ -706,6 +855,7 @@
     </div>
 
     <button class="cta" id="generateBtn" disabled>Generar rutina →</button>
+    <button class="progress-link" id="progressBtn" type="button">📊 Ver mi progreso</button>
   </section>
 
   <!-- ================= ROUTINE SCREEN ================= -->
@@ -731,9 +881,48 @@
       Tocá <strong style="color:var(--bamboo)">📖 Cómo se hace</strong> para ver los pasos · <strong style="color:var(--sun)">▶ Zen</strong> para modo inmersivo.<br/>
       <span class="credit">FlowForce · by Ohmygoch</span>
     </div>
+    
+    
   </section>
 
+<!-- ================= PROGRESS SCREEN ================= -->
+<section id="progressScreen" class="hidden">
+  <div class="rtop">
+    <button class="back" id="progressBack">← Volver</button>
+  </div>
+
+  <h2 class="rtitle">Tu progreso</h2>
+  <p style="color: var(--muted); font-size: 12.5px; margin: 0 0 22px;">
+    Todo se guarda localmente en tu dispositivo · <span style="color: var(--gold)">by ohmygoch</span>
+  </p>
+
+  <div class="metrics-grid" id="metricsGrid"></div>
+
+  <h2 class="step" style="margin-top: 32px;">Últimas 12 semanas</h2>
+  <div class="calendar-wrap">
+    <div class="calendar" id="calendar"></div>
+  </div>
+  <div class="calendar-legend">
+    <span>Menos</span>
+    <div class="cal-cell"></div>
+    <div class="cal-cell l1"></div>
+    <div class="cal-cell l2"></div>
+    <div class="cal-cell l3"></div>
+    <div class="cal-cell l4"></div>
+    <span>Más</span>
+  </div>
+
+  <h2 class="step" style="margin-top: 32px;">Detalles</h2>
+  <div class="details-list" id="detailsList"></div>
+
+  <button class="reset-btn" id="resetBtn" type="button">Borrar todo mi progreso</button>
+</section>
+
+
 </div>
+
+
+
 
 <!-- ZEN MODE -->
 <section id="zenScreen" class="zen hidden">
@@ -1384,6 +1573,273 @@ function findLevelUpSuggestion() {
     streak,
   };
 }
+
+/* ============================================================
+   SISTEMA DE PROGRESO
+   ============================================================ */
+const progressScreen = document.getElementById('progressScreen');
+const progressBtn    = document.getElementById('progressBtn');
+
+/* --- Helpers de fecha --- */
+function dayKey(ts) {
+  const d = new Date(ts);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtDuration(minutes) {
+  if (minutes < 60) return `${minutes}m`;
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return m === 0 ? `${h}h` : `${h}h ${m}m`;
+}
+
+/* --- Cálculo de métricas --- */
+function computeMetrics() {
+  const p = loadProgress();
+  const sessions = p.sessions;
+
+  const totalSessions = sessions.length;
+  const totalMinutes  = sessions.reduce((s, x) => s + x.minutes, 0);
+
+  // Set de días entrenados
+  const days = new Set(sessions.map(s => dayKey(s.date)));
+
+  // Racha actual (días consecutivos)
+  const todayKey     = dayKey(Date.now());
+  const yesterdayKey = dayKey(Date.now() - 86400000);
+  let currentStreak = 0;
+  let cursor = days.has(todayKey) ? todayKey : (days.has(yesterdayKey) ? yesterdayKey : null);
+  while (cursor && days.has(cursor)) {
+    currentStreak++;
+    const prev = new Date(cursor);
+    prev.setDate(prev.getDate() - 1);
+    cursor = dayKey(prev.getTime());
+  }
+
+  // Racha máxima histórica
+  const sortedDays = [...days].sort();
+  let longestStreak = 0, run = 0, prevDay = null;
+  for (const d of sortedDays) {
+    if (prevDay) {
+      const prevDate = new Date(prevDay);
+      prevDate.setDate(prevDate.getDate() + 1);
+      if (dayKey(prevDate.getTime()) === d) run++;
+      else run = 1;
+    } else run = 1;
+    longestStreak = Math.max(longestStreak, run);
+    prevDay = d;
+  }
+
+  // Objetivo favorito
+  const counts = {};
+  sessions.forEach(s => counts[s.objective] = (counts[s.objective] || 0) + 1);
+  const favEntry = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+
+  // Últimos 7 días
+  const sevenDaysAgo = Date.now() - 7 * 86400000;
+  const lastWeek = sessions.filter(s => s.date >= sevenDaysAgo).length;
+
+  return {
+    totalSessions,
+    totalMinutes,
+    currentStreak,
+    longestStreak,
+    favObjective: favEntry ? favEntry[0] : null,
+    favCount: favEntry ? favEntry[1] : 0,
+    lastWeek,
+    counts,
+  };
+}
+
+/* --- Render de métricas --- */
+function renderMetrics() {
+  const m = computeMetrics();
+  const grid = document.getElementById('metricsGrid');
+
+  const favObj = m.favObjective ? OBJECTIVES[m.favObjective] : null;
+  const favLabel = favObj ? `${favObj.emoji} ${favObj.label}` : '—';
+
+  const streakMsg = m.currentStreak === 0
+    ? 'Empezá hoy 💪'
+    : m.currentStreak === 1 ? '¡Arrancaste!'
+    : `¡${m.currentStreak} días seguidos!`;
+
+  grid.innerHTML = `
+    <div class="metric-card">
+      <div class="metric-value">${m.totalSessions}</div>
+      <div class="metric-label">Sesiones</div>
+      <div class="metric-sub">totales</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${fmtDuration(m.totalMinutes)}</div>
+      <div class="metric-label">Tiempo</div>
+      <div class="metric-sub">acumulado</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value bamboo">${m.currentStreak}${m.currentStreak > 0 ? '🔥' : ''}</div>
+      <div class="metric-label">Racha actual</div>
+      <div class="metric-sub">${streakMsg}</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${m.longestStreak}</div>
+      <div class="metric-label">Récord</div>
+      <div class="metric-sub">días seguidos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value small">${favLabel}</div>
+      <div class="metric-label">Favorito</div>
+      <div class="metric-sub">${m.favCount > 0 ? `${m.favCount} sesiones` : 'sin datos'}</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${m.lastWeek}</div>
+      <div class="metric-label">Últimos 7 días</div>
+      <div class="metric-sub">sesiones</div>
+    </div>
+  `;
+}
+
+/* --- Render de calendario --- */
+function renderCalendar() {
+  const p = loadProgress();
+  const minutesByDay = {};
+  p.sessions.forEach(s => {
+    const k = dayKey(s.date);
+    minutesByDay[k] = (minutesByDay[k] || 0) + s.minutes;
+  });
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const totalDays = 12 * 7; // 84 días
+
+  // Armar array de fechas de más vieja a más nueva
+  const dates = [];
+  for (let i = totalDays - 1; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    dates.push(d);
+  }
+
+  // Padding al inicio para que el primer día caiga en su fila correcta (Lun=0...Dom=6)
+  const firstDow = (dates[0].getDay() + 6) % 7;
+  const padded = [...Array(firstDow).fill(null), ...dates];
+
+  const container = document.getElementById('calendar');
+  container.innerHTML = '';
+
+  const todayKey = dayKey(Date.now());
+  const cols = Math.ceil(padded.length / 7);
+
+  for (let c = 0; c < cols; c++) {
+    const weekEl = document.createElement('div');
+    weekEl.className = 'calendar-week';
+    for (let r = 0; r < 7; r++) {
+      const d = padded[c * 7 + r];
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell';
+      if (!d) {
+        cell.classList.add('empty');
+      } else {
+        const k = dayKey(d.getTime());
+        const min = minutesByDay[k] || 0;
+        if (min > 0) {
+          if (min < 15) cell.classList.add('l1');
+          else if (min < 30) cell.classList.add('l2');
+          else if (min < 50) cell.classList.add('l3');
+          else cell.classList.add('l4');
+        }
+        if (k === todayKey) cell.classList.add('today');
+        const fecha = d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short' });
+        cell.title = min > 0 ? `${fecha} · ${min} min` : `${fecha} · sin entrenar`;
+      }
+      weekEl.appendChild(cell);
+    }
+    container.appendChild(weekEl);
+  }
+
+  // Auto-scroll al final (más reciente) en pantallas chicas
+  const wrap = container.parentElement;
+  requestAnimationFrame(() => { wrap.scrollLeft = wrap.scrollWidth; });
+}
+
+/* --- Render de detalles --- */
+function renderDetails() {
+  const m = computeMetrics();
+  const list = document.getElementById('detailsList');
+
+  if (m.totalSessions === 0) {
+    list.innerHTML = `
+      <div class="detail-row">
+        <span class="label" style="color: var(--muted)">Todavía no hay sesiones guardadas</span>
+      </div>
+    `;
+    return;
+  }
+
+  // Ordenar por cantidad descendente
+  const rows = Object.entries(m.counts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([key, count]) => {
+      const obj = OBJECTIVES[key];
+      if (!obj) return '';
+      const pct = Math.round((count / m.totalSessions) * 100);
+      return `
+        <div class="detail-row">
+          <span class="label">${obj.emoji} ${obj.label}</span>
+          <span class="value">${count} · ${pct}%</span>
+        </div>
+      `;
+    }).join('');
+
+  list.innerHTML = rows;
+}
+
+/* --- Render completo --- */
+function renderProgress() {
+  renderMetrics();
+  renderCalendar();
+  renderDetails();
+}
+
+/* --- Navegación --- */
+progressBtn.addEventListener('click', () => {
+  renderProgress();
+  selectScreen.classList.add('hidden');
+  progressScreen.classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('progressBack').addEventListener('click', () => {
+  progressScreen.classList.add('hidden');
+  selectScreen.classList.remove('hidden');
+  renderLevelUpBanner();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* --- Reset --- */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  const total = loadProgress().sessions.length;
+  if (total === 0) {
+    showToast('No hay nada que borrar 🤷');
+    return;
+  }
+  if (confirm(`¿Borrar ${total} sesiones guardadas?\nEsta acción no se puede deshacer.`)) {
+    localStorage.removeItem(STORAGE_KEY);
+    showToast('🗑️ Progreso borrado');
+    renderProgress();
+  }
+});
+
+/* --- Refrescar progreso al volver de la rutina --- */
+const originalBackBtn = document.getElementById('backBtn');
+// Guardamos el original y le agregamos un hook para no perderlo
+// (el listener ya existe, así que solo agregamos uno adicional)
+originalBackBtn.addEventListener('click', () => {
+  // El renderLevelUpBanner ya se llama en el listener original,
+  // pero acá aseguramos que si el usuario entra a progreso, esté fresco
+  if (!progressScreen.classList.contains('hidden')) {
+    renderProgress();
+  }
+});
+
 function renderLevelUpBanner() {
   const suggestion = findLevelUpSuggestion();
   const banner = document.getElementById('levelUpBanner');
