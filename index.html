@@ -1090,6 +1090,12 @@
 <!-- TOAST -->
 <div id="toast" class="toast hidden"></div>
 
+
+
+
+
+
+
 <script>
 /* ============================================================
    POOL DE EJERCICIOS
@@ -2659,6 +2665,78 @@ if ('serviceWorker' in navigator) {
       }
     }
   });
+}
+
+/* ============================================================
+   PWA · SERVICE WORKER CON AUTO-UPDATE
+   ============================================================ */
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('./sw.js');
+
+      // Chequear update cada vez que la app vuelve al frente
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          reg.update().catch(() => {});
+        }
+      });
+
+      // Chequear update cada 30 minutos
+      setInterval(() => reg.update().catch(() => {}), 30 * 60 * 1000);
+
+      // Cuando hay un SW nuevo esperando, avisarle que tome control
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        if (!newWorker) return;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // Hay nueva versión lista
+            showUpdateToast();
+          }
+        });
+      });
+
+      // Cuando el SW nuevo toma control, recargar la página
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+
+    } catch (err) {
+      console.warn('SW no registrado:', err);
+    }
+  });
+}
+
+/* --- Toast de actualización --- */
+function showUpdateToast() {
+  // Evitar duplicados
+  if (document.getElementById('updateToast')) return;
+  const el = document.createElement('div');
+  el.id = 'updateToast';
+  el.className = 'achievement-toast show';
+  el.style.pointerEvents = 'auto';
+  el.innerHTML = `
+    <div class="achievement-emoji">🔄</div>
+    <div class="achievement-text">
+      <div class="achievement-unlocked">Nueva versión</div>
+      <div class="achievement-name">Actualización lista</div>
+      <div class="achievement-desc">Tocá para recargar</div>
+    </div>
+  `;
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', () => {
+    navigator.serviceWorker.getRegistration().then(reg => {
+      if (reg && reg.waiting) reg.waiting.postMessage('SKIP_WAITING');
+      else window.location.reload();
+    });
+  });
+  document.body.appendChild(el);
+  // Auto-cerrar si el usuario ignora
+  setTimeout(() => el.remove(), 15000);
 }
 
 /* ============================================================
