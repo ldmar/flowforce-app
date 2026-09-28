@@ -2146,20 +2146,15 @@ function renderAchievements() {
   }).join('');
 }
 
-/* --- Hook: chequear logros al terminar una sesión --- */
-// (corre DESPUÉS del listener original porque se registra después)
-finishBtn.addEventListener('click', () => {
-  const nuevos = checkAchievements();
-  nuevos.forEach((a, i) => showAchievementToast(a, i * 900));
+/* Hook de logros al terminar sesión · vía delegación de eventos
+   (evita el problema de orden con finishBtn) */
+document.addEventListener('click', e => {
+  if (e.target.closest('#finishBtn')) {
+    const nuevos = checkAchievements();
+    nuevos.forEach((a, i) => showAchievementToast(a, i * 900));
+  }
 });
 
-/* --- Hook: agregar renderAchievements al render de progreso --- */
-// Guardamos el original y lo envolvemos para no perder funcionalidad
-const _renderProgress = renderProgress;
-renderProgress = function() {
-  _renderProgress();
-  renderAchievements();
-};
 
 /* --- Reset total (opcional): borrar también los logros --- */
 // Modificamos el reset para que borre ambas keys
