@@ -768,6 +768,139 @@
     .metric-value { font-size: 22px; }
     .metric-value.small { font-size: 16px; }
   }
+  /* ============ LOGROS ============ */
+  .achievements-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .achievements-count {
+    font-size: 12px; color: var(--gold); font-weight: 700;
+    letter-spacing: 1.5px; font-variant-numeric: tabular-nums;
+  }
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .badge {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+    transition: all .25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .badge.locked { opacity: .32; filter: grayscale(1); }
+  .badge.locked::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent 0 8px, rgba(255,255,255,.015) 8px 16px
+    );
+    pointer-events: none;
+  }
+  .badge.unlocked {
+    border-color: rgba(212,162,76,.5);
+    background: linear-gradient(135deg, rgba(212,162,76,.08), rgba(212,162,76,.02));
+    box-shadow: 0 0 20px rgba(212,162,76,.12);
+  }
+  .badge.unlocked:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(212,162,76,.3);
+    border-color: var(--gold);
+  }
+  .badge-emoji {
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .badge.unlocked .badge-emoji {
+    filter: drop-shadow(0 0 8px rgba(212,162,76,.5));
+  }
+  .badge-name {
+    font-size: 13px; font-weight: 700; color: var(--text);
+    margin-bottom: 4px; line-height: 1.2;
+  }
+  .badge-desc {
+    font-size: 11px; color: var(--muted);
+    line-height: 1.35;
+  }
+  .badge.locked .badge-name { color: var(--muted); }
+  .badge-date {
+    font-size: 10px; color: rgba(212,162,76,.7);
+    margin-top: 6px; letter-spacing: .5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Toast festivo de logro */
+  .achievement-toast {
+    position: fixed;
+    top: 24px; left: 50%;
+    transform: translate(-50%, -30px);
+    background: linear-gradient(135deg, #1a2820, #0f1a14);
+    border: 1.5px solid var(--gold);
+    border-radius: 16px;
+    padding: 16px 22px 16px 18px;
+    display: flex; gap: 14px; align-items: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,.65), 0 0 50px rgba(212,162,76,.35);
+    z-index: 300;
+    opacity: 0;
+    transition: all .45s cubic-bezier(.34, 1.56, .64, 1);
+    max-width: 92vw;
+    pointer-events: none;
+  }
+  .achievement-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .achievement-toast::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold), transparent 60%);
+    opacity: .35;
+    z-index: -1;
+    filter: blur(8px);
+  }
+  .achievement-emoji {
+    font-size: 38px;
+    filter: drop-shadow(0 0 14px rgba(212,162,76,.7));
+    animation: badgePop .7s cubic-bezier(.34, 1.56, .64, 1);
+    flex-shrink: 0;
+  }
+  @keyframes badgePop {
+    0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+    60% { transform: scale(1.25) rotate(12deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); }
+  }
+  .achievement-text {
+    display: flex; flex-direction: column; gap: 2px;
+    min-width: 0;
+  }
+  .achievement-unlocked {
+    font-size: 9.5px; letter-spacing: 2.5px;
+    color: var(--gold); font-weight: 800;
+    text-transform: uppercase;
+  }
+  .achievement-name {
+    font-size: 15px; font-weight: 700;
+    color: var(--text); line-height: 1.2;
+  }
+  .achievement-desc {
+    font-size: 12px; color: var(--muted);
+    line-height: 1.3;
+  }
+
+  @media (max-width: 400px) {
+    .achievements-grid { grid-template-columns: repeat(2, 1fr); }
+    .achievement-toast { padding: 14px 18px; gap: 10px; }
+    .achievement-emoji { font-size: 32px; }
+    .achievement-name { font-size: 14px; }
+  }
 
 </style>
 </head>
@@ -914,6 +1047,13 @@
 
   <h2 class="step" style="margin-top: 32px;">Detalles</h2>
   <div class="details-list" id="detailsList"></div>
+
+  <h2 class="step" style="margin-top: 32px;">Logros</h2>
+  <div class="achievements-header">
+    <span style="font-size: 12px; color: var(--muted);">Desbloqueá medallas entrenando</span>
+    <span class="achievements-count" id="achievementsCount"></span>
+  </div>
+  <div class="achievements-grid" id="achievementsGrid"></div>
 
   <button class="reset-btn" id="resetBtn" type="button">Borrar todo mi progreso</button>
 </section>
@@ -1797,6 +1937,7 @@ function renderProgress() {
   renderMetrics();
   renderCalendar();
   renderDetails();
+  renderAchievements(); 
 }
 
 /* --- Navegación --- */
@@ -1838,6 +1979,200 @@ originalBackBtn.addEventListener('click', () => {
   if (!progressScreen.classList.contains('hidden')) {
     renderProgress();
   }
+});
+
+/* ============================================================
+   SISTEMA DE LOGROS
+   ============================================================ */
+const ACHIEVEMENTS_KEY = 'fs_achievements_v1';
+
+/* --- Persistencia --- */
+function loadAchievements() {
+  try {
+    const raw = localStorage.getItem(ACHIEVEMENTS_KEY);
+    if (!raw) return {};
+    const a = JSON.parse(raw);
+    return (typeof a === 'object' && a !== null) ? a : {};
+  } catch { return {}; }
+}
+function saveAchievements(a) {
+  try { localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(a)); } catch {}
+}
+
+/* --- Contexto extendido para evaluar logros --- */
+function computeFullMetrics() {
+  const m = computeMetrics();
+  const p = loadProgress();
+  const sessions = p.sessions;
+
+  // Sesiones por día
+  const perDay = {};
+  sessions.forEach(s => {
+    const k = dayKey(s.date);
+    perDay[k] = (perDay[k] || 0) + 1;
+  });
+  const maxPerDay = Object.values(perDay).length
+    ? Math.max(...Object.values(perDay)) : 0;
+
+  // Madrugador / Noctámbulo
+  let hasEarlyBird = false, hasNightOwl = false;
+  sessions.forEach(s => {
+    const h = new Date(s.date).getHours();
+    if (h < 7) hasEarlyBird = true;
+    if (h >= 22) hasNightOwl = true;
+  });
+
+  return {
+    ...m,
+    maxPerDay,
+    hasEarlyBird,
+    hasNightOwl,
+    uniqueDays: Object.keys(perDay).length,
+  };
+}
+
+/* --- Definición de logros --- */
+const ACHIEVEMENTS = [
+  // Cantidad de sesiones
+  { id: 'sessions_1',   emoji: '🌱', name: 'Primer paso',     desc: 'Completá tu primera sesión',   check: c => c.totalSessions >= 1 },
+  { id: 'sessions_10',  emoji: '🌿', name: 'Constancia',      desc: '10 sesiones completadas',      check: c => c.totalSessions >= 10 },
+  { id: 'sessions_25',  emoji: '🌳', name: 'Bosque',          desc: '25 sesiones completadas',      check: c => c.totalSessions >= 25 },
+  { id: 'sessions_50',  emoji: '🏔️', name: 'Montaña',         desc: '50 sesiones completadas',      check: c => c.totalSessions >= 50 },
+  { id: 'sessions_100', emoji: '🌌', name: 'Leyenda',         desc: '100 sesiones completadas',     check: c => c.totalSessions >= 100 },
+
+  // Rachas
+  { id: 'streak_3',  emoji: '🔥', name: 'En llamas',       desc: 'Racha de 3 días',      check: c => c.longestStreak >= 3 },
+  { id: 'streak_7',  emoji: '🔥', name: 'Semana perfecta', desc: 'Racha de 7 días',      check: c => c.longestStreak >= 7 },
+  { id: 'streak_14', emoji: '⚡', name: 'Imparable',       desc: 'Racha de 14 días',     check: c => c.longestStreak >= 14 },
+  { id: 'streak_30', emoji: '💎', name: 'Diamante',        desc: 'Racha de 30 días',     check: c => c.longestStreak >= 30 },
+
+  // Tiempo acumulado
+  { id: 'time_60',   emoji: '⏱️', name: 'Primera hora',  desc: '1 hora acumulada',       check: c => c.totalMinutes >= 60 },
+  { id: 'time_300',  emoji: '🕐', name: 'Cinco horas',    desc: '5 horas acumuladas',     check: c => c.totalMinutes >= 300 },
+  { id: 'time_720',  emoji: '🌗', name: 'Medio día',      desc: '12 horas acumuladas',    check: c => c.totalMinutes >= 720 },
+  { id: 'time_1440', emoji: '🌕', name: 'Día completo',   desc: '24 horas acumuladas',    check: c => c.totalMinutes >= 1440 },
+
+  // Primer contacto con cada objetivo
+  { id: 'obj_strength', emoji: '💪', name: 'Forjado en hierro', desc: 'Una sesión de Fuerza',    check: c => (c.counts.strength || 0) >= 1 },
+  { id: 'obj_mobility', emoji: '🌊', name: 'Fluir',             desc: 'Una sesión de Movilidad', check: c => (c.counts.mobility || 0) >= 1 },
+  { id: 'obj_calm',     emoji: '🧘', name: 'Mente clara',       desc: 'Una sesión de Calma',     check: c => (c.counts.calm || 0) >= 1 },
+  { id: 'obj_skill',    emoji: '🎯', name: 'Cazador de skills', desc: 'Una sesión de Skills',    check: c => (c.counts.skill || 0) >= 1 },
+  { id: 'obj_hybrid',   emoji: '☯', name: 'Equilibrio',         desc: 'Una sesión de Yin-Yang',  check: c => (c.counts.hybrid || 0) >= 1 },
+
+  // Todoterreno
+  { id: 'all_objectives', emoji: '🌈', name: 'Todoterreno', desc: 'Probá los 5 objetivos',
+    check: c => ['strength','mobility','calm','skill','hybrid'].every(k => (c.counts[k] || 0) >= 1) },
+
+  // Especiales
+  { id: 'early_bird', emoji: '🐦', name: 'Madrugador',  desc: 'Entrená antes de las 7 AM',  check: c => c.hasEarlyBird },
+  { id: 'night_owl',  emoji: '🦉', name: 'Noctámbulo',  desc: 'Entrená después de las 22', check: c => c.hasNightOwl },
+  { id: 'double',     emoji: '⚡', name: 'Doble turno', desc: '2 sesiones el mismo día',    check: c => c.maxPerDay >= 2 },
+  { id: 'triple',     emoji: '🌟', name: 'Dedicado',    desc: '3 sesiones el mismo día',    check: c => c.maxPerDay >= 3 },
+  { id: 'days_30',    emoji: '📅', name: 'Mes activo',  desc: '30 días entrenados',         check: c => c.uniqueDays >= 30 },
+];
+
+/* --- Chequear y desbloquear --- */
+function checkAchievements() {
+  const ctx = computeFullMetrics();
+  const unlocked = loadAchievements();
+  const newlyUnlocked = [];
+
+  ACHIEVEMENTS.forEach(a => {
+    if (!unlocked[a.id] && a.check(ctx)) {
+      unlocked[a.id] = Date.now();
+      newlyUnlocked.push(a);
+    }
+  });
+
+  if (newlyUnlocked.length > 0) saveAchievements(unlocked);
+  return newlyUnlocked;
+}
+
+/* --- Toast festivo --- */
+function showAchievementToast(achievement, delay = 0) {
+  setTimeout(() => {
+    const el = document.createElement('div');
+    el.className = 'achievement-toast';
+    el.innerHTML = `
+      <div class="achievement-emoji">${achievement.emoji}</div>
+      <div class="achievement-text">
+        <div class="achievement-unlocked">¡Logro desbloqueado!</div>
+        <div class="achievement-name">${achievement.name}</div>
+        <div class="achievement-desc">${achievement.desc}</div>
+      </div>
+    `;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('show'));
+    setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => el.remove(), 500);
+    }, 4200);
+  }, delay);
+}
+
+/* --- Render en la pantalla de progreso --- */
+function renderAchievements() {
+  const unlocked = loadAchievements();
+  const grid = document.getElementById('achievementsGrid');
+  const countEl = document.getElementById('achievementsCount');
+
+  const total = ACHIEVEMENTS.length;
+  const unlockedCount = ACHIEVEMENTS.filter(a => unlocked[a.id]).length;
+  countEl.textContent = `${unlockedCount} / ${total}`;
+
+  // Primero desbloqueados (ordenados por fecha desc), después bloqueados
+  const sorted = [...ACHIEVEMENTS].sort((a, b) => {
+    const ua = unlocked[a.id], ub = unlocked[b.id];
+    if (ua && ub) return ub - ua;
+    if (ua) return -1;
+    if (ub) return 1;
+    return 0;
+  });
+
+  grid.innerHTML = sorted.map(a => {
+    const ts = unlocked[a.id];
+    const isUnlocked = !!ts;
+    const fecha = isUnlocked
+      ? new Date(ts).toLocaleDateString('es-AR', { day: '2-digit', month: 'short' })
+      : '';
+    return `
+      <div class="badge ${isUnlocked ? 'unlocked' : 'locked'}">
+        <span class="badge-emoji">${isUnlocked ? a.emoji : '🔒'}</span>
+        <div class="badge-name">${a.name}</div>
+        <div class="badge-desc">${a.desc}</div>
+        ${fecha ? `<div class="badge-date">${fecha}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+/* --- Hook: chequear logros al terminar una sesión --- */
+// (corre DESPUÉS del listener original porque se registra después)
+finishBtn.addEventListener('click', () => {
+  const nuevos = checkAchievements();
+  nuevos.forEach((a, i) => showAchievementToast(a, i * 900));
+});
+
+/* --- Hook: agregar renderAchievements al render de progreso --- */
+// Guardamos el original y lo envolvemos para no perder funcionalidad
+const _renderProgress = renderProgress;
+renderProgress = function() {
+  _renderProgress();
+  renderAchievements();
+};
+
+/* --- Reset total (opcional): borrar también los logros --- */
+// Modificamos el reset para que borre ambas keys
+const resetBtn = document.getElementById('resetBtn');
+resetBtn.addEventListener('click', () => {
+  // El listener original ya borra las sesiones; solo limpiamos logros después
+  setTimeout(() => {
+    const check = loadProgress().sessions.length;
+    if (check === 0) {
+      localStorage.removeItem(ACHIEVEMENTS_KEY);
+      renderAchievements();
+    }
+  }, 50);
 });
 
 function renderLevelUpBanner() {
