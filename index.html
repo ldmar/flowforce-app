@@ -2958,5 +2958,10 @@ function handleShortcutAction() {
 renderLevelUpBanner();
 handleShortcutAction();
 </script>
+<!-- DEBUG TEMPORAL -->
+<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+  if (location.search.includes('debug=1')) eruda.init();
+</script>
 </body>
 </html>
